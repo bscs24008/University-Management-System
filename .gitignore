@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/OOP Semester Project/OOP Seme.284ff9fc/x64/Debug
+/OOP Semester Project/OOP Seme.284ff9fc/Debug
+/OOP Semester Project/x64/Debug
+/OOP Semester Project/.vs/OOP Semester Project
