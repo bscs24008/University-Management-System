@@ -1,5 +1,5 @@
-#ifndef PERSON_H
-#define PERSON_H
+#ifndef USER_H
+#define USER_H
 
 #include "name.h"
 #include "date.h"
