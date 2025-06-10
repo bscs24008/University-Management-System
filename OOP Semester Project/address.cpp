@@ -35,3 +35,12 @@ void Address::display() const
 	city.print_string();
 	cout << endl;
 }
+
+my_string Address::get_city()
+{
+	return city;
+}
+my_string Address::get_country()
+{
+	return country;
+}

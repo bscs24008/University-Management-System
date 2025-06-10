@@ -1,0 +1,4 @@
+3
+UMS_Manager first_name last_name email password 15/3/2025 lahore Pakistan 200000
+Student 24008 Abdullah Khalid @itu.edu.pk 1234 31/3/2006 Lahore Pakistan 1
+Teacher T001 Husnain Haider @itu.edu.pk 1234 31/3/2006 Lahore Pakistan 200000

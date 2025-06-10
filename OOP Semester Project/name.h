@@ -12,7 +12,8 @@ public:
     Name(const my_string& f, const my_string& l);
     Name(const Name& other);
     Name& operator=(const Name& other);
-
+    my_string get_first_name();
+    my_string get_last_name();
     void display() const;
 };
 

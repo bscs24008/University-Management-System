@@ -36,7 +36,7 @@
     <ClInclude Include="offered_course.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="person.h">
+    <ClInclude Include="user.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="post.h">
@@ -55,6 +55,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="teacher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ums_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utills.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,7 +89,7 @@
     <ClCompile Include="post.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="person.cpp">
+    <ClCompile Include="user.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="registeration.cpp">
@@ -104,6 +110,12 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ums_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utills.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Courses.txt">
@@ -112,10 +124,7 @@
     <Text Include="offered_courses.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Students.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="Teachers.txt">
+    <Text Include="users.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

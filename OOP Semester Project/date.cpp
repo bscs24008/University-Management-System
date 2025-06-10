@@ -37,3 +37,24 @@ void Date::display() const
 {
 	cout << day << "/" << month << "/" << year << endl;
 }
+
+my_string Date::get_date_in_string()
+{
+	my_string day_str;
+	my_string mon_str;
+	my_string year_str;
+
+	day_str.convert_int_to_string(day);
+	mon_str.convert_int_to_string(month);
+	year_str.convert_int_to_string(year);
+
+	my_string date;
+
+	date.string_concatenation(day_str);
+	date.string_concatenation("/");
+	date.string_concatenation(mon_str);
+	date.string_concatenation("/");
+	date.string_concatenation(year_str);
+
+	return date;
+}

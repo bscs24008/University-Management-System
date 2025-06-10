@@ -7,6 +7,9 @@
 #include "discussion.h"
 
 
+//int number_of_courses_original = 0;
+//offered_course* off_courses_useless = nullptr;
+
 class offered_course : public course
 {
 private:
@@ -24,8 +27,10 @@ public:
 	int get_offered_course_id();
 };
 
+int& get_number_of_off_courses();
+//offered_course*& get_offered_courses();
 offered_course* regrow_offered_courses(int current_number_of_courses, offered_course* old_ptr);
-void offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int current_number_of_courses, course* courses, my_string course_id, Teacher* teachers, my_string teacher_id, int current_number_of_teachers);
+//void offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int current_number_of_courses, course* courses, my_string course_id, Teacher* users, my_string teacher_id, int current_number_of_teachers);
 
 
 #endif

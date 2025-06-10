@@ -30,7 +30,7 @@ offered_course* regrow_offered_courses(int current_number_of_courses, offered_co
 		new_ptr[i] = old_ptr[i];
 	}
 
-	new_ptr[current_number_of_courses] = offered_course();
+	//new_ptr[current_number_of_courses] = offered_course();
 	return new_ptr;
 }
 
@@ -93,7 +93,7 @@ void offer_course(offered_course*& offered_courses, int& current_number_of_offer
 void offered_course::print_offered_course()
 {
 	course::print_course();
-	course_instructor->display_person();
+	course_instructor->display_user();
 }
 
 void offered_course::initialize_offered_courses(fstream& f, course*& courses, Teacher*& teachers, int number_of_courses, int number_of_teachers)
@@ -172,3 +172,43 @@ int offered_course::get_offered_course_id()
 {
 	return offered_course_id;
 }
+
+
+int& get_number_of_off_courses()
+{
+	static int number_of_off_courses = 0;
+	static bool was_data_ever_loaded3 = false;
+
+	if (!was_data_ever_loaded3)
+	{
+		ifstream file("offered_courses.txt");
+		file >> number_of_off_courses;
+		was_data_ever_loaded3 = true;
+		file.close();
+	}
+
+	return number_of_off_courses;
+
+
+
+}
+//offered_course*& get_offered_courses()
+//{
+//	static offered_course* off_courses = nullptr;
+//	static bool was_data_ever_loaded = false;
+//	int number_of_off_courses = 0;
+//
+//	if (!was_data_ever_loaded)
+//	{
+//		ifstream file("off_courses.txt");
+//		file >> number_of_off_courses;
+//		
+//		for (int i = 0; i < number_of_off_courses; i++)
+//		{
+//
+//		}
+//	}
+//	
+//
+//
+//}

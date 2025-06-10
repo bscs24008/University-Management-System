@@ -63,3 +63,40 @@ course& course::get_course()
 {
 	return *this;
 }
+
+int& get_number_of_courses()
+{
+	static int no_of_courses = 0;
+	static bool has_data_been_loaded1 = false;
+
+	if (!has_data_been_loaded1)
+	{
+		ifstream file("Courses.txt");
+		file >> no_of_courses;
+		file.close();
+	}
+	
+	return no_of_courses;
+}
+
+
+course*& get_courses()
+{
+	static course* courses = nullptr;
+	static bool has_data_been_loaded2 = false;
+	int no_of_courses = 0;
+
+	if (!has_data_been_loaded2)
+	{
+		ifstream file("Courses.txt");
+		file >> no_of_courses;
+		courses = new course[no_of_courses];
+		for (int i = 0; i < no_of_courses; i++)
+		{
+			courses[i].initialize_course(file);
+		}
+		file.close();
+	}
+
+	return courses;
+}

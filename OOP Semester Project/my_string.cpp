@@ -264,17 +264,27 @@ void my_string::convert_int_to_string(int num)
 {
 	my_string temp = { nullptr, 0 };
 	int length = 0;
+	bool flag = false;
 	do
 	{
-		temp.ptr = new char[temp.len + 1] { char(char(num % 10) + '0') };
-		temp.len++;
+		const char* digit = new char[2]{ char(char(num % 10) + '0'), '\0' };
+		my_string str(digit);
 		num = num / 10;
-		this->string_concatenation(temp);
-	} while (num > 1);
+		this->string_concatenation(str);
+
+		if (flag == true)
+		{
+			break;
+		}
+		if (num / 10 == 0)
+		{
+			flag = true;
+		}
+	} while (num > 0);
 
 	for (int i = 0; i < len - i - 1; i++)
 	{
-		swap(ptr[i], ptr[len - i]);
+		swap(ptr[i], ptr[len - i - 1]);
 
 	}
 
@@ -599,7 +609,7 @@ void operator<<(ostream& is, my_string& str)
 {
 	for (int i = 0; i < str.len; i++)
 	{
-		cout << str.ptr[i];
+		is << str.ptr[i];
 	}
 }
 

@@ -14,6 +14,8 @@ public:
     Address(const my_string& c, const my_string& co);
     Address(const Address& other);
     Address& operator=(const Address& other);
+    my_string get_city();
+    my_string get_country();
 
     void display() const;
 };

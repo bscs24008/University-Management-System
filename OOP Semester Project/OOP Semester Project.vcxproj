@@ -134,13 +134,15 @@
     <ClInclude Include="my_string.h" />
     <ClInclude Include="name.h" />
     <ClInclude Include="offered_course.h" />
-    <ClInclude Include="person.h" />
+    <ClInclude Include="ums_manager.h" />
+    <ClInclude Include="user.h" />
     <ClInclude Include="post.h" />
     <ClInclude Include="registeration.h" />
     <ClInclude Include="reply.h" />
     <ClInclude Include="semester.h" />
     <ClInclude Include="student.h" />
     <ClInclude Include="teacher.h" />
+    <ClInclude Include="utills.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="address.cpp" />
@@ -150,7 +152,8 @@
     <ClCompile Include="my_string.cpp" />
     <ClCompile Include="name.cpp" />
     <ClCompile Include="offered_course.cpp" />
-    <ClCompile Include="person.cpp" />
+    <ClCompile Include="ums_manager.cpp" />
+    <ClCompile Include="user.cpp" />
     <ClCompile Include="post.cpp" />
     <ClCompile Include="registeration.cpp" />
     <ClCompile Include="reply.cpp" />
@@ -158,12 +161,12 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="student.cpp" />
     <ClCompile Include="teacher.cpp" />
+    <ClCompile Include="utills.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Courses.txt" />
     <Text Include="offered_courses.txt" />
-    <Text Include="Students.txt" />
-    <Text Include="Teachers.txt" />
+    <Text Include="users.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

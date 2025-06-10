@@ -36,3 +36,12 @@ void Name::display() const
 	lastName.print_string();
 	cout << endl;
 }
+
+my_string Name::get_first_name()
+{
+	return firstName;
+}
+my_string Name::get_last_name()
+{
+	return lastName;
+}

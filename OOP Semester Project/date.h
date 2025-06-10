@@ -15,7 +15,7 @@ public:
     Date(int d, int m, int y);
     Date(const Date& other);
     Date& operator=(const Date& other);
-
+    my_string get_date_in_string();
 
     void display() const;
 };
