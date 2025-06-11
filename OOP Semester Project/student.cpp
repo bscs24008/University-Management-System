@@ -68,10 +68,10 @@ void Student::display_transcript()
 
 void Student::enroll(int sem_no, offered_course*& off_courses, my_string passsed_course_id, int number_of_offered_courses)
 {
-    if (sem_no > number_of_sems)
-    {
-        throw("Semester dosent exist for student");
-    }
+    //if (sem_no > number_of_sems)
+    //{
+    //    throw("Semester dosent exist for student");
+    //}
 
     for (int i = 0; i < number_of_offered_courses; i++)
     {
@@ -87,7 +87,7 @@ void Student::enroll(int sem_no, offered_course*& off_courses, my_string passsed
         }
     }
 
-    throw("No such course exist");
+    //throw("No such course exist");
 
 
 
@@ -144,6 +144,7 @@ void Student::reply(my_string message, int sem_number, my_string id_of_target_co
 
 void Student::save_to_file(ofstream& out_file)
 {
+    ofstream enrollment_file("enrollments.txt");
     my_string first_name, last_name, date_of_birth, city, country;
 
     first_name = name.get_first_name();
@@ -170,20 +171,22 @@ void Student::save_to_file(ofstream& out_file)
     out_file << ' ';
     out_file << country;
     out_file << ' ';
-    out_file << number_of_sems;
-    //for (int i = 0; i < number_of_sems; i++)
-    //{
-    //    out_file << sems[i].get_number_of_enrollments();
-    //    out_file << ' ';
-    //    for (int j = 0; j < sems[i].get_number_of_enrollments(); j++)
-    //    {
-    //        out_file << sems[j].get_registerations()[j].get_off_course()->get_offered_course_id();
-    //        if (i != number_of_sems - 1 && j != sems[i].get_number_of_enrollments() - 1)
-    //        {
-    //            out_file << ' ';
-    //        }
-    //    }
-    //}
+    enrollment_file << number_of_sems;
+    for (int i = 0; i < number_of_sems; i++)
+    {
+        enrollment_file << ' ';
+        enrollment_file << sems[i].get_number_of_enrollments();
+        for (int j = 0; j < sems[i].get_number_of_enrollments(); j++)
+        {
+            enrollment_file << ' ';
+            enrollment_file << sems[j].get_registerations()[j].get_off_course()->get_offered_course_id();
+            if (i != number_of_sems - 1 && j != sems[i].get_number_of_enrollments() - 1)
+            {
+                enrollment_file << ' ';
+            }
+        }
+    }
+    enrollment_file << '\n';
     out_file << '\n';
 }
 void Student::load_from_file(ifstream& in_file)
@@ -215,9 +218,9 @@ void Student::load_from_file(ifstream& in_file)
 
     User::set_user(password, name_of_person, dob, address_of_Teacher, email_of_teacher);
 
-    in_file >> number_of_sems;
+    //in_file >> number_of_sems;
 
-    sems = new Semester[number_of_sems];
+    //sems = new Semester[number_of_sems];
 
     //offered_course*& off_courses = get_offered_courses();
     //int no_of_off_courses = get_number_of_off_courses();
@@ -243,4 +246,47 @@ my_string Student::get_role()
 {
     my_string str = "Student";
     return str;
+}
+
+void Student::load_offered_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file)
+{
+    enrollement_file >> number_of_sems;
+
+    sems = new Semester[number_of_sems];
+
+    for (int i = 0; i < number_of_sems; i++)
+    {
+        Registeration* enrollments = sems[i].get_registerations();
+        int no_of_enrollments = sems[i].get_number_of_enrollments();
+        enrollement_file >> no_of_enrollments;
+        my_string off_course_id;
+        enrollement_file >> off_course_id;
+        this->enroll(i + 1, offered_courses, off_course_id, number_of_courses);
+        
+    }
+}
+
+void Student::save_enrollments_to_file(ofstream& out_file)
+{
+    out_file << number_of_sems;
+    out_file << " ";
+    for (int i = 0; i < number_of_sems; i++)
+    {
+        int number_of_enrollements = sems[i].get_number_of_enrollments();
+        out_file << number_of_enrollements;
+        out_file << " ";
+        Registeration* regs = sems[i].get_registerations();
+        for (int j = 0; j < number_of_enrollements; j++)
+        {
+            out_file << regs[i].get_off_course()->get_offered_course_id();
+            if (j != number_of_enrollements - 1)
+            {
+                out_file << " ";
+            }
+            else
+            {
+                out_file << "\n";
+            }
+        }
+    }
 }

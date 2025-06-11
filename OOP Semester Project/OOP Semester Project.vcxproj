@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Courses.txt" />
+    <Text Include="enrollments.txt" />
     <Text Include="offered_courses.txt" />
     <Text Include="users.txt" />
   </ItemGroup>

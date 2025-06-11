@@ -14,6 +14,7 @@ class course
 	int credits = 0;
 public:
 	course();
+	course(my_string passed_course_id, my_string passed_course_title, int passed_credits);
 	void print_course();
 	void initialize_course(istream& file);
 	course(const course& c);
@@ -21,6 +22,7 @@ public:
 	my_string& get_course_id();
 	my_string& get_course_title();
 	course& get_course();
+	void save_to_file(ofstream& course_file);
 
 };
 

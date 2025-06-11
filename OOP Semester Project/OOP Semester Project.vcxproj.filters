@@ -127,5 +127,8 @@
     <Text Include="users.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="enrollments.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

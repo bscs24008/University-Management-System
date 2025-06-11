@@ -30,6 +30,10 @@ void regrow_array_2d(T**& t, int no_of_t)
 
 void initialize_users(User**& users, int& number_of_users);
 
-//Teacher**& get_teachers();
-//
-//int get_number_of_teachers();
+Teacher**& get_teachers(User**& users, int& number_of_users);
+
+int get_number_of_teachers(User**& users, int& number_of_users);
+
+int get_number_of_students(User**& users, int& number_of_users);
+
+Student**& get_students(User**& users, int& number_of_users);

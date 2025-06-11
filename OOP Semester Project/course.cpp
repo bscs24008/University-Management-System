@@ -100,3 +100,18 @@ course*& get_courses()
 
 	return courses;
 }
+
+course::course(my_string passed_course_id, my_string passed_course_title, int passed_credits) : course_id(passed_course_id), course_title(passed_course_title), credits(passed_credits)
+{
+
+}
+
+void course::save_to_file(ofstream& course_file)
+{
+	course_file << course_id;
+	course_file << " ";
+	course_file << course_title;
+	course_file << " ";
+	course_file << credits;
+	course_file << "\n";
+}

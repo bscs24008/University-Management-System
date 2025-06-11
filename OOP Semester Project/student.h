@@ -5,7 +5,6 @@
 #include "my_string.h"
 #include "semester.h"
 
-
 class Student : public User {
 private:
     my_string rollNumber;
@@ -27,6 +26,8 @@ public:
     void save_to_file(ofstream& out_file) override;
     void load_from_file(ifstream& in_file) override;
     my_string get_role() override;
+    void load_offered_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file);
+    void save_enrollments_to_file(ofstream& out_file);
 };
 
 void regrow_student_array(Student*& arr, int number_of_students);

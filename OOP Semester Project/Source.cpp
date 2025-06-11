@@ -14,17 +14,18 @@ using namespace std;
 int main()
 {
 	fstream Courses("Courses.txt", ios::in);
-	fstream offered_courses_file("offered_courses.txt", ios::in);
-
-	Courses.close();
-	offered_courses_file.close();
-
+	ifstream offered_courses_file("offered_courses.txt", ios::in);
+	ifstream enrollment_file("enrollements.txt");
 	int number_of_courses = 0;
-	int number_of_offered_courses = 0;
 
 	Courses >> number_of_courses;
 
-	course* courses = new course[number_of_courses];
+	course* courses = nullptr;
+	if (number_of_courses > 0)
+	{
+		courses = new course[number_of_courses];
+	}
+
 
 	for (int i = 0; i < number_of_courses; i++)
 	{
@@ -35,6 +36,43 @@ int main()
 	int number_of_users = 0;
 
 	initialize_users(users, number_of_users);
+
+	my_string** teacher_ids = nullptr;
+	int number_of_teacher_ids = 0;
+
+	offered_course* offered_courses = nullptr;
+	int number_of_offered_courses = 0;
+
+	offered_courses_file >> number_of_offered_courses;
+	offered_courses = new offered_course[number_of_offered_courses];
+
+	Teacher** teachers = get_teachers(users, number_of_users);
+	int number_of_teachers = get_number_of_teachers(users, number_of_users);
+
+	Student** students = get_students(users, number_of_users);
+	int number_of_students = get_number_of_students(users, number_of_users);
+
+	for (int i = 0; i < number_of_offered_courses; i++)
+	{
+		offered_courses[i].initialize_offered_courses(offered_courses_file, courses, number_of_courses, teacher_ids, number_of_teacher_ids);
+		offered_courses[i].offer_course(teachers, number_of_teachers, teacher_ids[i]);
+	}
+
+	for (int i = 0; i < number_of_offered_courses; i++)
+	{
+		offered_courses[i].print_offered_course();
+	}
+
+	for (int i = 0; i < number_of_students; i++)
+	{
+		students[i]->load_offered_courses(offered_courses, number_of_offered_courses, enrollment_file);
+	}
+
+
+
+	
+
+
 
 	my_string email;
 	my_string password;
@@ -142,16 +180,55 @@ int main()
 			}
 			else if (choice == 3)
 			{
+				my_string course_id,  course_title;
+				int credit_hours = 4;
+
+				course_id = "CS101";
+				course_title = "PF";
+
+				admin_user->add_course(courses, number_of_courses, course_id, course_title, credit_hours);
+			}
+			else if (choice == 4)
+			{
+				my_string offered_course_id, course_id, teacher_id;
+
+				offered_course_id = "PF001";
+				course_id = "CS101";
+				teacher_id = "T001";
+
+				admin_user->offer_course(offered_courses, number_of_offered_courses, number_of_courses, courses, course_id, teachers, teacher_id,  number_of_teachers);
+			}
+			else if (choice == 5)
+			{
 				break;
 			}
-		} while (choice != 3);
+		} while (true);
 
 		ofstream out_file_for_users("users.txt");
+		ofstream out_file_for_courses("Courses.txt");
+		ofstream enrollments("enrollments.txt");
+		ofstream offered_course_out_file("offered_courses.txt");
 		out_file_for_users << number_of_users;
 		out_file_for_users << "\n";
 		for (int i = 0; i < number_of_users; i++)
 		{
 			users[i]->save_to_file(out_file_for_users);
+		}
+		out_file_for_courses << number_of_courses;
+		out_file_for_courses << "\n";
+		for (int i = 0; i < number_of_courses; i++)
+		{
+			courses->save_to_file(out_file_for_courses);
+		}
+		for (int i = 0; i < number_of_students; i++)
+		{
+			students[i]->save_enrollments_to_file(enrollments);
+		}
+		offered_course_out_file << number_of_offered_courses;
+		offered_course_out_file << "\n";
+		for (int i = 0; i < number_of_offered_courses; i++)
+		{
+			offered_courses[i].save_to_file(offered_course_out_file);
 		}
 
 
