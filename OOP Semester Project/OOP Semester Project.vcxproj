@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="address.h" />
+    <ClInclude Include="attendance.h" />
     <ClInclude Include="course.h" />
     <ClInclude Include="date.h" />
     <ClInclude Include="discussion.h" />
@@ -146,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="address.cpp" />
+    <ClCompile Include="attendance.cpp" />
     <ClCompile Include="course.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="discussion.cpp" />

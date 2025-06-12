@@ -1,17 +1,19 @@
 #ifndef REGISTERATION_H
 #define REGISTERATION_H
-
 #include "offered_course.h"
+#include "attendance.h"
+
 
 class Registeration
 {
 	offered_course* off_course;
 	my_string grade;
-
+	//Attendance* attendance;
+	//int number_of_lectures;
 public:
 	Registeration();
 	Registeration(offered_course* passed_off_courses, my_string passed_grade);
-	void set(offered_course* passed_off_course, my_string passed_grade);
+	void set(offered_course*& passed_off_course, my_string passed_grade);
 	void assign_grade(my_string passed_grade);
 	my_string get_grade();
 	void print_registeration();

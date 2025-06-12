@@ -59,11 +59,11 @@ int& Teacher::get_number_of_courses_taught()
 	return number_of_courses_taught;
 }
 
-void Teacher::post(my_string message, int id_of_course_taught)
+void Teacher::post(my_string message, my_string off_course_id)
 {
 	for (int i = 0; i < number_of_courses_taught; i++)
 	{
-		if (courses_taught[i].get_offered_course_id() == i)
+		if (courses_taught[i].get_offered_course_id().string_equality(off_course_id))
 		{
 			Discussion& discussion = courses_taught[i].get_Discussion();
 			discussion.post(Teacher_id, message);
@@ -72,11 +72,11 @@ void Teacher::post(my_string message, int id_of_course_taught)
 	//throw("Course not found");
 
 }
-void Teacher::reply(my_string message, int id_of_course_taught, int post_id)
+void Teacher::reply(my_string message, my_string off_course_id, int post_id)
 {
 	for (int i = 0; i < number_of_courses_taught; i++)
 	{
-		if (courses_taught[i].get_offered_course_id() == i)
+		if (courses_taught[i].get_offered_course_id().string_equality(off_course_id))
 		{
 			Discussion& discussion = courses_taught[i].get_Discussion();
 			discussion.reply_to_post(post_id, Teacher_id, message);

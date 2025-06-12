@@ -26,7 +26,7 @@ public:
     void save_to_file(ofstream& out_file) override;
     void load_from_file(ifstream& in_file) override;
     my_string get_role() override;
-    void load_offered_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file);
+    void load_enrolled_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file);
     void save_enrollments_to_file(ofstream& out_file);
 };
 

@@ -4,12 +4,14 @@
 #include "course.h"
 #include "my_string.h"
 #include "utills.h"
+#include "registeration.h"
+#include "offered_course.h"
 using namespace std;
 
 class teacher {};
 
 
-offered_course::offered_course() : offered_course_id(0), course()
+offered_course::offered_course() : offered_course_id(), course()
 {
 }
 offered_course& offered_course :: operator=(offered_course const& other)
@@ -19,6 +21,12 @@ offered_course& offered_course :: operator=(offered_course const& other)
 		course::operator=(other);
 		offered_course_id = other.offered_course_id;
 		course_instructor = other.course_instructor;
+		number_of_enrollments = other.number_of_enrollments;
+		enrollments = new Registeration * [other.number_of_enrollments];
+		for (int i = 0; i < number_of_enrollments; i++)
+		{
+			enrollments[i] = other.enrollments[i];
+		}
 	}
 
 	return *this;
@@ -36,61 +44,61 @@ offered_course* regrow_offered_courses(int current_number_of_courses, offered_co
 	return new_ptr;
 }
 
-void offered_course::set_offered_course(course* c, Teacher* t, int passed_offered_course_id)
+void offered_course::set_offered_course(course* c, Teacher* t, my_string passed_offered_course_id)
 {
 	course::operator=(*c);
 	course_instructor = t;
 	offered_course_id = passed_offered_course_id;
 }
 
-void offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int current_number_of_courses, course* courses, my_string course_id, Teacher* teachers, my_string teacher_id, int current_number_of_teachers)
-{
-	int index_of_Teacher = 0;
-	int index_of_Course = 0;
-	bool flag = false;
-	for (int i = 0; i < current_number_of_courses; i++)
-	{
-		if (courses[i].get_course_id().string_equality(course_id))
-		{
-			index_of_Course = i;
-			flag = true;
-			break;
-
-		}
-	}
-	if (!flag)
-	{
-		throw("Course Not found");
-	}
-	flag = false;
-	for (int i = 0; i < current_number_of_teachers; i++)
-	{
-		if (teachers[i].get_teacher_id().string_equality(teacher_id))
-		{
-			index_of_Teacher = i;
-			flag = true;
-			break;
-		}
-	}
-	if (!flag)
-	{
-		throw("Teacher Not found");
-	}
-
-	offered_courses = regrow_offered_courses(current_number_of_offered_courses, offered_courses);
-	offered_courses[current_number_of_offered_courses].set_offered_course(&courses[index_of_Course], &teachers[index_of_Teacher], current_number_of_offered_courses);
-	current_number_of_offered_courses++;
-
-	offered_course* ids_of_courses = teachers[index_of_Teacher].get_courses_taught();
-	int& number_of_courses_taught = teachers[index_of_Teacher].get_number_of_courses_taught();
-
-	ids_of_courses = regrow_offered_courses(number_of_courses_taught, ids_of_courses);
-
-	ids_of_courses[number_of_courses_taught] = offered_courses[current_number_of_offered_courses - 1];
-
-	number_of_courses_taught++;
-
-}
+//void offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int current_number_of_courses, course* courses, my_string course_id, Teacher* teachers, my_string teacher_id, int current_number_of_teachers)
+//{
+//	int index_of_Teacher = 0;
+//	int index_of_Course = 0;
+//	bool flag = false;
+//	for (int i = 0; i < current_number_of_courses; i++)
+//	{
+//		if (courses[i].get_course_id().string_equality(course_id))
+//		{
+//			index_of_Course = i;
+//			flag = true;
+//			break;
+//
+//		}
+//	}
+//	if (!flag)
+//	{
+//		throw("Course Not found");
+//	}
+//	flag = false;
+//	for (int i = 0; i < current_number_of_teachers; i++)
+//	{
+//		if (teachers[i].get_teacher_id().string_equality(teacher_id))
+//		{
+//			index_of_Teacher = i;
+//			flag = true;
+//			break;
+//		}
+//	}
+//	if (!flag)
+//	{
+//		throw("Teacher Not found");
+//	}
+//
+//	offered_courses = regrow_offered_courses(current_number_of_offered_courses, offered_courses);
+//	offered_courses[current_number_of_offered_courses].set_offered_course(&courses[index_of_Course], &teachers[index_of_Teacher], current_number_of_offered_courses);
+//	current_number_of_offered_courses++;
+//
+//	offered_course* ids_of_courses = teachers[index_of_Teacher].get_courses_taught();
+//	int& number_of_courses_taught = teachers[index_of_Teacher].get_number_of_courses_taught();
+//
+//	ids_of_courses = regrow_offered_courses(number_of_courses_taught, ids_of_courses);
+//
+//	ids_of_courses[number_of_courses_taught] = offered_courses[current_number_of_offered_courses - 1];
+//
+//	number_of_courses_taught++;
+//
+//}
 
 void offered_course::print_offered_course()
 {
@@ -166,9 +174,9 @@ void offered_course::initialize_offered_courses(ifstream& f, course*& courses, i
 
 	my_string course_id, teacher_id;
 
+	f >> offered_course_id;
 	f >> course_id;
 	f >> teacher_id;
-	f >> offered_course_id;
 
 	int index_of_teacher = 0;
 
@@ -206,7 +214,7 @@ my_string offered_course::get_course_id()
 	return course::get_course_id();
 }
 
-int offered_course::get_offered_course_id()
+my_string offered_course::get_offered_course_id()
 {
 	return offered_course_id;
 }
@@ -290,4 +298,13 @@ void offered_course::save_off_course_to_file(ofstream& out_file)
 	out_file << " ";
 	out_file << teacher_id;
 	out_file << "\n";
+}
+
+Registeration**& offered_course::get_enrollments()
+{
+	return enrollments;
+}
+int& offered_course::get_number_of_enrollments()
+{
+	return number_of_enrollments;
 }

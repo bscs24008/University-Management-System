@@ -111,7 +111,7 @@ void UMS_manager::add_course(course*& courses, int& number_of_courses, my_string
 	number_of_courses++;
 }
 
-void UMS_manager::offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int& current_number_of_courses, course*& courses, my_string course_id, Teacher**& teachers, my_string teacher_id, int& current_number_of_teachers)
+void UMS_manager::offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int& current_number_of_courses, course*& courses, my_string course_id, Teacher**& teachers, my_string teacher_id, int& current_number_of_teachers, my_string offered_course_id)
 {
 	int index_of_Teacher = 0;
 	int index_of_Course = 0;
@@ -150,7 +150,7 @@ void UMS_manager::offer_course(offered_course*& offered_courses, int& current_nu
 	//}
 
 	offered_courses = regrow_offered_courses(current_number_of_offered_courses, offered_courses);
-	offered_courses[current_number_of_offered_courses].set_offered_course(&courses[index_of_Course], teachers[index_of_Teacher], current_number_of_offered_courses);
+	offered_courses[current_number_of_offered_courses].set_offered_course(&courses[index_of_Course], teachers[index_of_Teacher], offered_course_id);
 	current_number_of_offered_courses++;
 
 	offered_course* ids_of_courses = teachers[index_of_Teacher]->get_courses_taught();

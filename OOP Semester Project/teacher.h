@@ -24,8 +24,8 @@ public:
     void display();
     offered_course*& get_courses_taught();
     int& get_number_of_courses_taught();
-    void post(my_string message, int id_of_course_taught);
-    void reply(my_string message, int id_of_course_taught, int post_id);
+    void post(my_string message, my_string off_course_id);
+    void reply(my_string message, my_string off_course_id, int post_id);
     void save_to_file(ofstream& out_file) override;
     void load_from_file(ifstream& file) override;
     void set_teacher(my_string passed_teacher_id, int passed_salary);

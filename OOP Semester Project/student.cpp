@@ -1,7 +1,7 @@
 #include <iostream>
 #include "student.h"
 #include "my_string.h"
-
+#include "utills.h"
 using namespace std;
 
 Student::Student() : User(), rollNumber("bscs24xxx"), sems(nullptr), number_of_sems(1)
@@ -75,14 +75,19 @@ void Student::enroll(int sem_no, offered_course*& off_courses, my_string passsed
 
     for (int i = 0; i < number_of_offered_courses; i++)
     {
-        if (off_courses[i].get_course_id().string_equality(passsed_course_id))
+        if (off_courses[i].get_offered_course_id().string_equality(passsed_course_id))
         {
             offered_course* ptr = &off_courses[i];
             Registeration*& registerations = sems[sem_no - 1].get_registerations();
             int& number_of_enrollments = sems[sem_no - 1].get_number_of_enrollments();
-            regrow_registeration(registerations, number_of_enrollments);
+            regrow_array(registerations, number_of_enrollments);
             registerations[number_of_enrollments].set(ptr, "Not Assigned Yet");
             number_of_enrollments++;
+            Registeration** enrollments_in_off_course = ptr->get_enrollments();
+            int number_of_enrollments_in_off_course = ptr->get_number_of_enrollments();
+            regrow_array_2d(enrollments_in_off_course, number_of_enrollments_in_off_course);
+            enrollments_in_off_course[number_of_enrollments_in_off_course] = &registerations[number_of_enrollments -1 ];
+            number_of_enrollments_in_off_course++;
             return;
         }
     }
@@ -178,8 +183,9 @@ void Student::save_to_file(ofstream& out_file)
         enrollment_file << sems[i].get_number_of_enrollments();
         for (int j = 0; j < sems[i].get_number_of_enrollments(); j++)
         {
+            my_string offered_id = sems[j].get_registerations()[j].get_off_course()->get_offered_course_id();
             enrollment_file << ' ';
-            enrollment_file << sems[j].get_registerations()[j].get_off_course()->get_offered_course_id();
+            enrollment_file << offered_id;
             if (i != number_of_sems - 1 && j != sems[i].get_number_of_enrollments() - 1)
             {
                 enrollment_file << ' ';
@@ -248,7 +254,7 @@ my_string Student::get_role()
     return str;
 }
 
-void Student::load_offered_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file)
+void Student::load_enrolled_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file)
 {
     enrollement_file >> number_of_sems;
 
@@ -259,9 +265,16 @@ void Student::load_offered_courses(offered_course*& offered_courses, int& number
         Registeration* enrollments = sems[i].get_registerations();
         int no_of_enrollments = sems[i].get_number_of_enrollments();
         enrollement_file >> no_of_enrollments;
-        my_string off_course_id;
-        enrollement_file >> off_course_id;
-        this->enroll(i + 1, offered_courses, off_course_id, number_of_courses);
+        for (int j = 0; j < no_of_enrollments; j++)
+        {
+            my_string off_course_id;
+            enrollement_file >> off_course_id;
+            this->enroll(i + 1, offered_courses, off_course_id, number_of_courses);
+            my_string grade;
+            enrollement_file >> grade;
+            enrollments[j].assign_grade(grade);
+        }
+
         
     }
 }
@@ -278,7 +291,11 @@ void Student::save_enrollments_to_file(ofstream& out_file)
         Registeration* regs = sems[i].get_registerations();
         for (int j = 0; j < number_of_enrollements; j++)
         {
-            out_file << regs[i].get_off_course()->get_offered_course_id();
+            my_string offered_id = regs[i].get_off_course()->get_offered_course_id();
+            out_file << offered_id;
+            out_file << " ";
+            my_string grade = regs[i].get_grade();
+            out_file << grade;
             if (j != number_of_enrollements - 1)
             {
                 out_file << " ";

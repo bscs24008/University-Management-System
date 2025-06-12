@@ -34,7 +34,7 @@ void regrow_registeration(Registeration*& registerations, int number_of_register
 
 	registerations = new_registerations;
 }
-void Registeration::set(offered_course* passed_off_course, my_string passed_grade)
+void Registeration::set(offered_course*& passed_off_course, my_string passed_grade)
 {
 	off_course = passed_off_course;
 	grade = passed_grade;

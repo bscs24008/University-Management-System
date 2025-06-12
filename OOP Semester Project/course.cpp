@@ -113,5 +113,4 @@ void course::save_to_file(ofstream& course_file)
 	course_file << course_title;
 	course_file << " ";
 	course_file << credits;
-	course_file << "\n";
 }
