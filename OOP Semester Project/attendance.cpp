@@ -2,7 +2,7 @@
 #include "my_string.h"
 
 
-Attendance::Attendance()
+Attendance::Attendance() : lecture_no(0), attd("A")
 {
 
 }
@@ -14,8 +14,9 @@ void Attendance::print_attendance()
 {
 	cout << "Lecture " << lecture_no << ": " << attd;
 }
-void Attendance::set_attendance(my_string passed_atd)
+void Attendance::set_attendance(int passed_lecture_no, my_string passed_atd)
 {
+	lecture_no = passed_lecture_no;
 	attd = passed_atd;
 }
 Attendance& Attendance::operator=(const Attendance& other)
@@ -27,4 +28,9 @@ Attendance& Attendance::operator=(const Attendance& other)
 	}
 
 	return *this;
+}
+
+my_string& Attendance::get_attd()
+{
+	return attd;
 }

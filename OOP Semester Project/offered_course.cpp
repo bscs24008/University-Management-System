@@ -274,9 +274,7 @@ void offered_course::offer_course(Teacher**& teachers, int& number_of_teachers, 
 		}
 	}
 
-	this->course_instructor = new Teacher;
-
-	this->course_instructor->operator=(*teachers[index_of_Teacher]);
+	this->course_instructor = new Teacher{*teachers[index_of_Teacher]};
 
 	offered_course* ids_of_courses = teachers[index_of_Teacher]->get_courses_taught();
 	int& number_of_courses_taught = teachers[index_of_Teacher]->get_number_of_courses_taught();
@@ -294,7 +292,8 @@ void offered_course::save_off_course_to_file(ofstream& out_file)
 	my_string teacher_id = course_instructor->get_teacher_id();
 	out_file << offered_course_id;
 	out_file << " ";
-	out_file << course::get_course_title();
+	my_string course_id = this->get_course_id();
+	out_file << course_id;
 	out_file << " ";
 	out_file << teacher_id;
 	out_file << "\n";

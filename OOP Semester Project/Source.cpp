@@ -74,13 +74,13 @@ int main()
 
 
 
-	my_string email;
-	my_string password;
+	my_string email = "@itu.edu.pk";
+	my_string password = "1234";
 
-	cout << "Enter email for logging in: ";
-	cin >> email;
-	cout << "Enter password for logging in: ";
-	cin >> password;
+	//cout << "Enter email for logging in: ";
+	//cin >> email;
+	//cout << "Enter password for logging in: ";
+	//cin >> password;
 
 	User* logged_in_user = nullptr;
 	for (int i = 0; i < number_of_users; i++)

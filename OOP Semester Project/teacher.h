@@ -30,6 +30,8 @@ public:
     void load_from_file(ifstream& file) override;
     void set_teacher(my_string passed_teacher_id, int passed_salary);
     my_string get_role() override;
+    void mark_attendance(my_string offered_course_id, my_string rollno, int lecture_no, my_string attd);
+    void print_students_of_course(my_string offered_course_id);
 };
 
 #endif

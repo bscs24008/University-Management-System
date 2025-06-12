@@ -5,6 +5,7 @@
 #include "user.h"
 #include "offered_course.h"
 #include "address.h"
+#include "registeration.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ Teacher::Teacher() : User(), salary(0), courses_taught(nullptr), number_of_cours
 {
 
 }
-Teacher::Teacher(const Teacher& other) : User(other), salary(other.salary), courses_taught(other.courses_taught), number_of_courses_taught(other.number_of_courses_taught)
+Teacher::Teacher(const Teacher& other) : User(other), Teacher_id(other.Teacher_id), salary(other.salary), courses_taught(other.courses_taught), number_of_courses_taught(other.number_of_courses_taught)
 {
 
 }
@@ -165,4 +166,45 @@ my_string Teacher::get_role()
 {
 	my_string str = "Teacher";
 	return str;
+}
+
+void Teacher::mark_attendance(my_string offered_course_id, my_string rollno, int lecture_no, my_string attd)
+{
+	for (int i = 0; i < number_of_courses_taught; i++)
+	{
+		if (courses_taught->get_offered_course_id().string_equality(offered_course_id))
+		{
+			Registeration** enrollments = courses_taught[i].get_enrollments();
+			int number_of_enrollments = courses_taught[i].get_number_of_enrollments();
+			for (int j = 0; j < number_of_enrollments; j++)
+			{
+				if (enrollments[j]->get_roll_no().string_equality(rollno))
+				{
+					Attendance* attendance = enrollments[j]->get_attendance();
+					attendance[lecture_no].set_attendance(lecture_no, attd);
+				}
+			}
+		}
+	}
+}
+void Teacher::print_students_of_course(my_string offered_course_id)
+{
+
+	for (int i = 0; i < number_of_courses_taught; i++)
+	{
+		if (courses_taught->get_offered_course_id().string_equality(offered_course_id))
+		{
+			Registeration** enrollments = courses_taught[i].get_enrollments();
+			int number_of_enrollments = courses_taught[i].get_number_of_enrollments();
+			for (int j = 0; j < number_of_enrollments; j++)
+			{
+				my_string roll_no = enrollments[j]->get_roll_no();
+				roll_no.print_string();
+				if (j != number_of_enrollments - 1)
+				{
+					cout << "\n";
+				}
+			}
+		}
+	}
 }

@@ -34,8 +34,9 @@ void regrow_registeration(Registeration*& registerations, int number_of_register
 
 	registerations = new_registerations;
 }
-void Registeration::set(offered_course*& passed_off_course, my_string passed_grade)
+void Registeration::set(my_string passed_rollno, offered_course*& passed_off_course, my_string passed_grade)
 {
+	rollno = passed_rollno;
 	off_course = passed_off_course;
 	grade = passed_grade;
 }
@@ -56,4 +57,18 @@ Discussion& Registeration::get_discussion()
 offered_course* Registeration::get_off_course()
 {
 	return off_course;
+}
+
+Attendance*& Registeration::get_attendance()
+{
+	return attendance;
+}
+int& Registeration::get_number_of_lectures()
+{
+	return number_of_lectures;
+}
+
+my_string& Registeration::get_roll_no()
+{
+	return rollno;
 }

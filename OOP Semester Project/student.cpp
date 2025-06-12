@@ -81,7 +81,11 @@ void Student::enroll(int sem_no, offered_course*& off_courses, my_string passsed
             Registeration*& registerations = sems[sem_no - 1].get_registerations();
             int& number_of_enrollments = sems[sem_no - 1].get_number_of_enrollments();
             regrow_array(registerations, number_of_enrollments);
-            registerations[number_of_enrollments].set(ptr, "Not Assigned Yet");
+            registerations[number_of_enrollments].set(rollNumber, ptr, "Not Assigned Yet");
+            Attendance* attendance = registerations[number_of_enrollments].get_attendance();
+            int& number_of_lectures = registerations[number_of_enrollments].get_number_of_lectures();
+            attendance = nullptr;
+            number_of_lectures = 0;
             number_of_enrollments++;
             Registeration** enrollments_in_off_course = ptr->get_enrollments();
             int number_of_enrollments_in_off_course = ptr->get_number_of_enrollments();
@@ -273,6 +277,27 @@ void Student::load_enrolled_courses(offered_course*& offered_courses, int& numbe
             my_string grade;
             enrollement_file >> grade;
             enrollments[j].assign_grade(grade);
+            Attendance* attd = enrollments->get_attendance();
+            int no_of_lect = enrollments->get_number_of_lectures();
+            enrollement_file >> no_of_lect;
+            if (no_of_lect > 0)
+            {
+                attd = new Attendance[no_of_lect];
+            }
+            else
+            {
+                attd = nullptr;
+                no_of_lect = 0;
+            }
+            for (int k = 0; k < no_of_lect; k++)
+            {
+                my_string attendance;
+                enrollement_file >> attendance;
+                attd[k].set_attendance(k + 1, attendance);
+            }
+
+
+            
         }
 
         
@@ -281,6 +306,8 @@ void Student::load_enrolled_courses(offered_course*& offered_courses, int& numbe
 
 void Student::save_enrollments_to_file(ofstream& out_file)
 {
+    out_file << rollNumber;
+    out_file << " ";
     out_file << number_of_sems;
     out_file << " ";
     for (int i = 0; i < number_of_sems; i++)
@@ -296,6 +323,18 @@ void Student::save_enrollments_to_file(ofstream& out_file)
             out_file << " ";
             my_string grade = regs[i].get_grade();
             out_file << grade;
+            Attendance* attd = regs[j].get_attendance();
+            int no_of_lect = regs[j].get_number_of_lectures();
+            out_file << " ";
+            out_file << no_of_lect;
+            for (int k = 0; k < no_of_lect; k++)
+            {
+                out_file << attd[k].get_attd();
+                if (k != no_of_lect)
+                {
+                    out_file << " ";
+                }
+            }
             if (j != number_of_enrollements - 1)
             {
                 out_file << " ";
