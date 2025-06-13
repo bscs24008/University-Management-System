@@ -47,7 +47,7 @@ Teacher**& get_teachers(User**& users, int& number_of_users)
 		if (users[i]->get_role().string_equality("Teacher"))
 		{
 			regrow_array_2d(teachers, number_of_teachers);
-			teachers[number_of_teachers] = (Teacher*)users[i];
+			teachers[number_of_teachers] = (Teacher*)&users[i][0];
 			number_of_teachers++;
 		}
 	}

@@ -30,11 +30,11 @@ public:
 	Discussion& get_Discussion();
 	my_string get_course_id();
 	my_string get_offered_course_id();
-	void offer_course(Teacher**& teachers, int& number_of_teachers, my_string* teacher_id);
+	void offer_course(User**& teachers, int& number_of_users, my_string* teacher_id);
 	void save_off_course_to_file(ofstream& out_file);
 	Registeration**& get_enrollments();
 	int& get_number_of_enrollments();
-
+	void set_offered_course(course c, my_string off_course_id);
 	
 };
 

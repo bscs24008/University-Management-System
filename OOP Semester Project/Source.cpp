@@ -15,7 +15,7 @@ int main()
 {
 	ifstream Courses("Courses.txt", ios::in);
 	ifstream offered_courses_file("offered_courses.txt", ios::in);
-	ifstream enrollment_file("enrollements.txt");
+	ifstream enrollment_file("enrollments.txt");
 	int number_of_courses = 0;
 
 	Courses >> number_of_courses;
@@ -46,8 +46,12 @@ int main()
 	offered_courses_file >> number_of_offered_courses;
 	offered_courses = new offered_course[number_of_offered_courses];
 
-	Teacher** teachers = get_teachers(users, number_of_users);
-	int number_of_teachers = get_number_of_teachers(users, number_of_users);
+	if (number_of_offered_courses == 0)
+	{
+		offered_courses = nullptr;
+	}
+	//Teacher** teachers = get_teachers(users, number_of_users);
+	//int number_of_teachers = get_number_of_teachers(users, number_of_users);
 
 	Student** students = get_students(users, number_of_users);
 	int number_of_students = get_number_of_students(users, number_of_users);
@@ -55,7 +59,7 @@ int main()
 	for (int i = 0; i < number_of_offered_courses; i++)
 	{
 		offered_courses[i].initialize_offered_courses(offered_courses_file, courses, number_of_courses, teacher_ids, number_of_teacher_ids);
-		offered_courses[i].offer_course(teachers, number_of_teachers, teacher_ids[i]);
+		offered_courses[i].offer_course(users, number_of_users, teacher_ids[i]);
 	}
 
 	//for (int i = 0; i < number_of_offered_courses; i++)
@@ -100,7 +104,7 @@ int main()
 		int choice = 0;
 		do {
 			system("cls");
-			cout << "Enter what operation you want to perform: 1 for adding a student, 2 for adding a teacher, 3 for exit";
+			cout << "Enter what operation you want to perform: 1 for adding a student\n2 for adding a teacher\n3 for adding course\n4 for ad";
 			cin >> choice;
 			if (choice == 1)
 			{
@@ -125,7 +129,7 @@ int main()
 				roll_no = "24008";
 				first_name = "Abdullah";
 				last_name = "Khalid";
-				email = "@itu.edu.pk";
+				email = "ak@itu.edu.pk";
 				city = "Lahore";
 				country = "Pakistan";
 				date_of_birth = "31/03/2006";
@@ -136,9 +140,6 @@ int main()
 				Date dob_of_student(date_of_birth);
 
 				admin_user->add_student(Password, roll_no, name_of_student, email, dob_of_student, addr_of_student, users, number_of_users);
-				regrow_array_2d(students, number_of_students);
-				students[number_of_students] = (Student*)users[number_of_users - 1];
-				number_of_students++;
 			}
 			else if (choice == 2)
 			{
@@ -180,9 +181,6 @@ int main()
 				Date dob_of_teacher(date_of_birth);
 
 				admin_user->add_teacher(Password, teacher_id, name_of_teacher, email, dob_of_teacher, addr_of_teacher, salary, users, number_of_users);
-				regrow_array_2d(teachers, number_of_teachers);
-				teachers[number_of_teachers] = (Teacher*)users[number_of_users - 1];
-				number_of_teachers++;
 			}
 			else if (choice == 3)
 			{
@@ -202,7 +200,7 @@ int main()
 				course_id = "CS101";
 				teacher_id = "T001";
 
-				admin_user->offer_course(offered_courses, number_of_offered_courses, number_of_courses, courses, course_id, teachers, teacher_id, number_of_teachers, offered_course_id);
+				admin_user->offer_course(offered_courses, number_of_offered_courses, number_of_courses, courses, course_id, users, teacher_id, number_of_users, offered_course_id);
 
 			}
 			else if (choice == 5)
@@ -227,9 +225,59 @@ int main()
 				}
 				else if (choice == 2)
 				{
+
+				}
+				else if (choice == 3)
+				{
 					break;
 				}
 			} while (true);
+	}
+	else if (role_of_log_in_user.string_equality("Teacher"))
+	{
+		Teacher* teacher_user = (Teacher*)logged_in_user;
+		int choice = 0;
+		do
+		{
+			system("cls");
+			cout << "Enter what operation you want to perform: 1 for viewing students of a course, 2 for adding a lecture, 3 for marking attendance, 4 for exiting: ";
+			cin >> choice;
+			if (choice == 1)
+			{
+				my_string off_course_id;
+				cout << "Enter offered course id of the course whose students you wish to see: ";
+				cin >> off_course_id;
+				teacher_user->print_students_of_course(off_course_id);
+			}
+			else if (choice == 2)
+			{
+				my_string off_course_id;
+				cout << "Enter offered course id of the course in which you want to add a lecture: ";
+				cin >> off_course_id;
+				int lect_no;
+				cout << "Enter lecture no: ";
+				cin >> lect_no;
+				teacher_user->create_lecture(lect_no, off_course_id);
+			}
+			else if (choice == 3)
+			{
+				my_string off_course_id, student_rollno, attd;
+				cout << "Enter offered course id of the course in which you want to add a lecture: ";
+				cin >> off_course_id;
+				cout << "Enter student roll no: ";
+				cin >> student_rollno;
+				cout << "Enter what you want to mark, P for present, A for absent: ";
+				cin >> attd;
+				int lect_no;
+				cout << "Enter lecture no: ";
+				cin >> lect_no;
+				teacher_user->mark_attendance(off_course_id, student_rollno, lect_no, attd);
+			}
+			else if (choice == 4)
+			{
+				break;
+			}
+		} while (true);
 	}
 
 
@@ -263,6 +311,14 @@ int main()
 	{
 		offered_courses[i].save_off_course_to_file(offered_course_out_file);
 	}
+
+	out_file_for_users.close();
+	out_file_for_courses.close();
+	enrollments.close();
+	enrollment_file.close();
+	offered_courses_file.close();
+	Courses.close();
+	offered_course_out_file.close();
 
 
 }

@@ -111,7 +111,7 @@ void UMS_manager::add_course(course*& courses, int& number_of_courses, my_string
 	number_of_courses++;
 }
 
-void UMS_manager::offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int& current_number_of_courses, course*& courses, my_string course_id, Teacher**& teachers, my_string teacher_id, int& current_number_of_teachers, my_string offered_course_id)
+void UMS_manager::offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int& current_number_of_courses, course*& courses, my_string course_id, User**& users, my_string teacher_id, int& current_number_of_users, my_string offered_course_id)
 {
 	int index_of_Teacher = 0;
 	int index_of_Course = 0;
@@ -126,42 +126,12 @@ void UMS_manager::offer_course(offered_course*& offered_courses, int& current_nu
 
 		}
 	}
-	//if (!flag)
-	// 
-	// 
-	// 
-	// 
-	//{
-	//	throw("Course Not found");
-	//}
-	//flag = false;
-	for (int i = 0; i < current_number_of_teachers; i++)
-	{
-		if (teachers[i]->get_teacher_id().string_equality(teacher_id))
-		{
-			index_of_Teacher = i;
-			//flag = true;
-			break;
-		}
-	}
-	//if (!flag)
-	//{
-	//	throw("Teacher Not found");
-	//}
 
-	offered_courses = regrow_offered_courses(current_number_of_offered_courses, offered_courses);
-	offered_courses[current_number_of_offered_courses].set_offered_course(&courses[index_of_Course], teachers[index_of_Teacher], offered_course_id);
+	regrow_array(offered_courses, current_number_of_offered_courses);
+	offered_courses[current_number_of_offered_courses].set_offered_course(courses[index_of_Course], offered_course_id);
+	
+	offered_courses[current_number_of_offered_courses].offer_course(users, current_number_of_users, &teacher_id);
 	current_number_of_offered_courses++;
-
-	offered_course* ids_of_courses = teachers[index_of_Teacher]->get_courses_taught();
-	int& number_of_courses_taught = teachers[index_of_Teacher]->get_number_of_courses_taught();
-
-	ids_of_courses = regrow_offered_courses(number_of_courses_taught, ids_of_courses);
-
-	ids_of_courses[number_of_courses_taught] = offered_courses[current_number_of_offered_courses - 1];
-
-	number_of_courses_taught++;
-
 }
 /*
 Entity: UMS Manager, Student, Teacher

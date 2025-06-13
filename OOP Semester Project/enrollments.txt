@@ -1,1 +1,1 @@
-24008 1 1 PF001 Not Assigned Yet 0
+24008 1 1 PF001 Not_Assigned_Yet 1 A 

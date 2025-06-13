@@ -6,7 +6,7 @@
 #include "offered_course.h"
 #include "address.h"
 #include "registeration.h"
-
+#include "utills.h"
 using namespace std;
 
 
@@ -25,7 +25,7 @@ Teacher& Teacher ::  operator=(const Teacher& other)
 		User::operator=(other);
 		salary = other.salary;
 		number_of_courses_taught = other.number_of_courses_taught;
-		courses_taught = new offered_course[number_of_courses_taught];
+		courses_taught = new offered_course*[number_of_courses_taught];
 		for (int i = 0; i < other.number_of_courses_taught; i++)
 		{
 			courses_taught[i] = other.courses_taught[i];
@@ -51,7 +51,7 @@ void Teacher::display()
 }
 
 
-offered_course*& Teacher::get_courses_taught()
+offered_course**& Teacher::get_courses_taught()
 {
 	return courses_taught;
 }
@@ -64,9 +64,9 @@ void Teacher::post(my_string message, my_string off_course_id)
 {
 	for (int i = 0; i < number_of_courses_taught; i++)
 	{
-		if (courses_taught[i].get_offered_course_id().string_equality(off_course_id))
+		if (courses_taught[i]->get_offered_course_id().string_equality(off_course_id))
 		{
-			Discussion& discussion = courses_taught[i].get_Discussion();
+			Discussion& discussion = courses_taught[i]->get_Discussion();
 			discussion.post(Teacher_id, message);
 		}
 	}
@@ -77,9 +77,9 @@ void Teacher::reply(my_string message, my_string off_course_id, int post_id)
 {
 	for (int i = 0; i < number_of_courses_taught; i++)
 	{
-		if (courses_taught[i].get_offered_course_id().string_equality(off_course_id))
+		if (courses_taught[i]->get_offered_course_id().string_equality(off_course_id))
 		{
-			Discussion& discussion = courses_taught[i].get_Discussion();
+			Discussion& discussion = courses_taught[i]->get_Discussion();
 			discussion.reply_to_post(post_id, Teacher_id, message);
 		}
 	}
@@ -172,10 +172,10 @@ void Teacher::mark_attendance(my_string offered_course_id, my_string rollno, int
 {
 	for (int i = 0; i < number_of_courses_taught; i++)
 	{
-		if (courses_taught->get_offered_course_id().string_equality(offered_course_id))
+		if (courses_taught[i]->get_offered_course_id().string_equality(offered_course_id))
 		{
-			Registeration** enrollments = courses_taught[i].get_enrollments();
-			int number_of_enrollments = courses_taught[i].get_number_of_enrollments();
+			Registeration** enrollments = courses_taught[i]->get_enrollments();
+			int number_of_enrollments = courses_taught[i]->get_number_of_enrollments();
 			for (int j = 0; j < number_of_enrollments; j++)
 			{
 				if (enrollments[j]->get_roll_no().string_equality(rollno))
@@ -192,10 +192,10 @@ void Teacher::print_students_of_course(my_string offered_course_id)
 
 	for (int i = 0; i < number_of_courses_taught; i++)
 	{
-		if (courses_taught->get_offered_course_id().string_equality(offered_course_id))
+		if (courses_taught[i]->get_offered_course_id().string_equality(offered_course_id))
 		{
-			Registeration** enrollments = courses_taught[i].get_enrollments();
-			int number_of_enrollments = courses_taught[i].get_number_of_enrollments();
+			Registeration** enrollments = courses_taught[i]->get_enrollments();
+			int number_of_enrollments = courses_taught[i]->get_number_of_enrollments();
 			for (int j = 0; j < number_of_enrollments; j++)
 			{
 				my_string roll_no = enrollments[j]->get_roll_no();
@@ -204,6 +204,26 @@ void Teacher::print_students_of_course(my_string offered_course_id)
 				{
 					cout << "\n";
 				}
+			}
+		}
+	}
+}
+
+void Teacher::create_lecture(int lecture_no, my_string offered_course_id)
+{
+	for (int i = 0; i < number_of_courses_taught; i++)
+	{
+		if (courses_taught[i]->get_offered_course_id().string_equality(offered_course_id))
+		{
+			Registeration**& enrollments = courses_taught[i]->get_enrollments();
+			int& number_of_enrollments = courses_taught[i]->get_number_of_enrollments();
+			for (int j = 0; j < number_of_enrollments; j++)
+			{
+				Attendance*& attendance = enrollments[j]->get_attendance();
+				int& no_of_lectures = enrollments[j]->get_number_of_lectures();
+				regrow_array(attendance, no_of_lectures);
+				attendance[no_of_lectures].set_attendance(j + 1, "A");
+				no_of_lectures++;
 			}
 		}
 	}

@@ -262,28 +262,23 @@ offered_course*& get_offered_courses()
 
 }
 
-void offered_course::offer_course(Teacher**& teachers, int& number_of_teachers, my_string* teacher_id)
+void offered_course::offer_course(User**& users, int& number_of_users, my_string* teacher_id)
 {
-	int index_of_Teacher = 0;
-	for (int i = 0; i < number_of_teachers; i++)
+	for (int i = 0; i < number_of_users; i++)
 	{
-		if (teachers[i]->get_teacher_id().string_equality(*teacher_id))
+		if (users[i]->get_role().string_equality("Teacher"))
 		{
-			index_of_Teacher = i;
-			break;
+			Teacher*& ptr = (Teacher*&)users[i];
+			this->course_instructor = ptr;
+			offered_course**& ids_of_courses = ptr->get_courses_taught();
+			int& number_of_courses_taught = ptr->get_number_of_courses_taught();
+
+			regrow_array(ids_of_courses, number_of_courses_taught);
+			ids_of_courses[number_of_courses_taught] = this;
+
+			number_of_courses_taught++;
 		}
 	}
-
-	this->course_instructor = new Teacher{*teachers[index_of_Teacher]};
-
-	offered_course* ids_of_courses = teachers[index_of_Teacher]->get_courses_taught();
-	int& number_of_courses_taught = teachers[index_of_Teacher]->get_number_of_courses_taught();
-
-	ids_of_courses = regrow_offered_courses(number_of_courses_taught, ids_of_courses);
-
-	ids_of_courses[number_of_courses_taught] = *this;
-
-	number_of_courses_taught++;
 
 }
 
@@ -306,4 +301,9 @@ Registeration**& offered_course::get_enrollments()
 int& offered_course::get_number_of_enrollments()
 {
 	return number_of_enrollments;
+}
+void offered_course::set_offered_course(course c, my_string off_course_id)
+{
+	course::operator=(c);
+	offered_course_id = off_course_id;
 }

@@ -12,7 +12,7 @@ class offered_course;
 class Teacher : public User {
 private:
     my_string Teacher_id;
-    offered_course* courses_taught = nullptr;
+    offered_course** courses_taught = nullptr;
     int number_of_courses_taught = 0;
     int salary;
 public:
@@ -22,7 +22,7 @@ public:
     Teacher& operator=(const Teacher& other);
     my_string get_teacher_id();
     void display();
-    offered_course*& get_courses_taught();
+    offered_course**& get_courses_taught();
     int& get_number_of_courses_taught();
     void post(my_string message, my_string off_course_id);
     void reply(my_string message, my_string off_course_id, int post_id);
@@ -32,6 +32,7 @@ public:
     my_string get_role() override;
     void mark_attendance(my_string offered_course_id, my_string rollno, int lecture_no, my_string attd);
     void print_students_of_course(my_string offered_course_id);
+    void create_lecture(int lecture_no, my_string offered_course_id);
 };
 
 #endif
