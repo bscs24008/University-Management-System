@@ -8,6 +8,9 @@
 #include "offered_course.h"
 #include "utills.h"
 #include "ums_manager.h"
+#include <chrono>
+#include <thread>
+
 
 using namespace std;
 
@@ -78,7 +81,7 @@ int main()
 
 
 
-	my_string email = "@itu.edu.pk";
+	my_string email = "ak@itu.edu.pk";
 	my_string password = "1234";
 
 	//cout << "Enter email for logging in: ";
@@ -216,18 +219,45 @@ int main()
 			do
 			{
 				system("cls");
-				cout << "Enter what operation you want to perform: 1 for enrolling a course, 2 for exit: ";
+				cout << "Enter what operation you want to perform: 1 for enrolling a course\n2 for seeing transcript\n3 for posting a message\n4 for seeing a discussion\n5 for exit: ";
 				cin >> choice;
 				if (choice == 1)
 				{
 					my_string offered_course_id = "PF001";
 					student_user->enroll(1, offered_courses, offered_course_id, number_of_offered_courses);
+					system("cls");
 				}
 				else if (choice == 2)
 				{
-
+					int useless_variable;
+					student_user->display_transcript();
+					this_thread::sleep_for(chrono::seconds(5));
 				}
 				else if (choice == 3)
+				{
+					my_string off_id;
+					cout << "Enter offered id of course: ";
+					cin >> off_id;
+					int sem_no;
+					cout << "Enter sem no of the course: ";
+					cin >> sem_no;
+					my_string message;
+					cout << "Enter your message: ";
+					cin >> message;
+					student_user->post(message, sem_no, off_id);
+				}
+				else if (choice == 4)
+				{
+					my_string off_id;
+					cout << "Enter offered id of course: ";
+					cin >> off_id;
+					int sem_no;
+					cout << "Enter sem no of the course: ";
+					cin >> sem_no;
+					student_user->print_discussion(off_id, sem_no);
+					this_thread::sleep_for(chrono::seconds(5));
+				}
+				else if (choice == 5)
 				{
 					break;
 				}

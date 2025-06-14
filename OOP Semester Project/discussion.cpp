@@ -57,3 +57,12 @@ void Discussion::print_discussion()
 	}
 }
 
+int& Discussion::get_number_of_posts()
+{
+	return current_number_of_posts;
+}
+Post*& Discussion::get_posts()
+{
+	return posts;
+}
+

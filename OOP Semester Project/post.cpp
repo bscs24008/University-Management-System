@@ -63,3 +63,14 @@ int Post::get_post_id()
 {
 	return id_of_post;
 }
+
+
+my_string& Post::get_id_of_person()
+{
+	return id_of_person;
+}
+
+my_string& Post::get_content_of_post()
+{
+	return content_of_post;
+}

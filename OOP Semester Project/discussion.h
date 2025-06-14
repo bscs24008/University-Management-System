@@ -13,7 +13,8 @@ public:
 	void post(my_string id_of_person, my_string content_of_post);
 	void reply_to_post(int post_id, my_string id_of_person, my_string content_of_reply);
 	void print_discussion();
-
+	int& get_number_of_posts();
+	Post*& get_posts();
 };
 
 #endif

@@ -64,7 +64,7 @@ Discussion& Semester::get_discussion(my_string id_of_target_course)
 
 	for (int i = 0; i < number_of_enrollments; i++)
 	{
-		if (id_of_target_course.string_equality(registerations[i].get_off_course()->get_course_id().get_string_ptr()))
+		if (id_of_target_course.string_equality(registerations[i].get_off_course()->get_offered_course_id().get_string_ptr()))
 		{
 
 			return registerations[i].get_discussion();

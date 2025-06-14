@@ -53,6 +53,7 @@ void Student::display_transcript()
 {
     this->display();
     cout << "Current_semster: " << number_of_sems;
+    cout << "\n";
     for (int i = 0; i < number_of_sems; i++)
     {
         cout << "Semester " << i + 1 << endl;
@@ -281,7 +282,7 @@ void Student::load_enrolled_courses(offered_course*& offered_courses, int& numbe
         if (no_of_enrollments == 0)
         {
             enrollments = nullptr;
-            no_of_enrollments == 0;
+            no_of_enrollments = 0;
         }
         for (int j = 0; j < no_of_enrollments; j++)
         {
@@ -371,4 +372,9 @@ void Student::save_enrollments_to_file(ofstream& out_file)
             }
         }
     }
+}
+
+void Student::print_discussion(my_string off_id, int sem_no)
+{
+    sems[sem_no - 1].get_discussion(off_id).print_discussion();
 }

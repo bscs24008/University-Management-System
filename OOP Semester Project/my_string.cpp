@@ -626,3 +626,14 @@ void regrow_string_array(my_string*& arr, int number_of_strings)
 
 	arr = new_arr;
 }
+
+void my_string::replace_all(char character_to_replace, char character_to_replace_with)
+{
+	for (int i = 0; i < len; i++)
+	{
+		if (ptr[i] == character_to_replace)
+		{
+			ptr[i] = character_to_replace_with;
+		}
+	}
+}

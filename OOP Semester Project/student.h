@@ -28,6 +28,7 @@ public:
     my_string get_role() override;
     void load_enrolled_courses(offered_course*& offered_courses, int& number_of_courses, ifstream& enrollement_file);
     void save_enrollments_to_file(ofstream& out_file);
+    void print_discussion(my_string off_id, int sem_no);
 };
 
 void regrow_student_array(Student*& arr, int number_of_students);

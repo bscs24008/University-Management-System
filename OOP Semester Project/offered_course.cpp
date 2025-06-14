@@ -192,6 +192,28 @@ void offered_course::initialize_offered_courses(ifstream& f, course*& courses, i
 		}
 	}
 
+	int number_of_posts;
+	f >> number_of_posts;
+
+	for (int i = 0; i < number_of_posts; i++)
+	{
+		my_string rollNo;
+		f >> rollNo;
+		my_string message;
+		f >> message;
+		int number_of_replies_for_post = 0;
+		f >> number_of_replies_for_post;
+		message.replace_all('_', ' ');
+		Discussion &d = this->get_Discussion();
+		d.post(rollNo, message);
+		for (int j = 0; j < number_of_replies_for_post; j++)
+		{
+			my_string id_of_person_replying, content_of_reply;
+			f >> id_of_person_replying;
+			f >> content_of_reply;
+			d.reply_to_post(i, id_of_person_replying, content_of_reply);
+		}
+	}
 	course_instructor = nullptr;
 
 	regrow_array_2d(teacher_ids, number_of_teacher_ids);
@@ -291,7 +313,48 @@ void offered_course::save_off_course_to_file(ofstream& out_file)
 	out_file << course_id;
 	out_file << " ";
 	out_file << teacher_id;
-	out_file << "\n";
+	out_file << " ";
+
+	Discussion d = this->get_Discussion();
+
+	int& number_of_posts = d.get_number_of_posts();
+
+	out_file << number_of_posts << " ";
+
+	Post*& posts = d.get_posts();
+	for (int i = 0; i < number_of_posts; i++)
+	{
+		out_file << posts[i].get_id_of_person();
+		out_file << " ";
+		my_string& message = (posts[i].get_content_of_post());
+		message.replace_all(' ', '_');
+		out_file << message;
+		out_file << " ";
+		int& number_of_replies_of_post = posts[i].get_number_of_replies();
+		Reply*& replies = posts[i].get_replies();
+		out_file << number_of_replies_of_post;
+		if (number_of_replies_of_post == 0 && i != number_of_posts - 1)
+		{
+			out_file << "\n";
+		}
+		for (int j = 0; j < number_of_replies_of_post; j++)
+		{
+			out_file << " ";
+			out_file << replies[j].get_id_of_person_from_reply();
+			out_file << " ";
+			my_string reply_message = replies[j].get_content_of_reply();
+			reply_message.replace_all(' ', '_');
+			out_file << reply_message;
+			if (j != number_of_replies_of_post - 1)
+			{
+				out_file << " ";
+			}
+			else if (i != number_of_posts - 1)
+			{
+				out_file << "\n";
+			}
+		}
+	}
 }
 
 Registeration**& offered_course::get_enrollments()

@@ -99,6 +99,8 @@ public:
 	void friend operator>>(istream& is, my_string& str);
 
 	void friend operator<<(ostream& is, my_string& str);
+
+	void replace_all(char character_to_replace, char character_to_replace_with);
 };
 
 void regrow_string_array(my_string*& arr, int number_of_strings);

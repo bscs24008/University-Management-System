@@ -21,6 +21,8 @@ public:
 	int get_post_id();
 	Reply*& get_replies();
 	int& get_number_of_replies();
+	my_string& get_id_of_person();
+	my_string& get_content_of_post();
 };
 
 Post* regrow_post(Post* Posts, int current_number_of_posts);
