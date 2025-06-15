@@ -4,6 +4,7 @@
 #include "my_string.h"
 #include "reply.h"
 
+
 class Post
 {
 private:
@@ -25,6 +26,6 @@ public:
 	my_string& get_content_of_post();
 };
 
-Post* regrow_post(Post* Posts, int current_number_of_posts);
+Post*& regrow_post(Post*& Posts, int& current_number_of_posts);
 
 #endif

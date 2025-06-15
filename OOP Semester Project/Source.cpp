@@ -14,6 +14,8 @@
 
 using namespace std;
 
+const int line_size = 256;
+
 int main()
 {
 	ifstream Courses("Courses.txt", ios::in);
@@ -219,7 +221,7 @@ int main()
 			do
 			{
 				system("cls");
-				cout << "Enter what operation you want to perform: 1 for enrolling a course\n2 for seeing transcript\n3 for posting a message\n4 for seeing a discussion\n5 for exit: ";
+				cout << "Enter what operation you want to perform: 1 for enrolling a course\n2 for seeing transcript\n3 for posting a message\n4 for replying to a post\n5 for seeing a discussion\n6 for exit: ";
 				cin >> choice;
 				if (choice == 1)
 				{
@@ -241,12 +243,30 @@ int main()
 					int sem_no;
 					cout << "Enter sem no of the course: ";
 					cin >> sem_no;
-					my_string message;
+					char message[line_size];
 					cout << "Enter your message: ";
-					cin >> message;
+					cin.ignore();
+					cin.getline(message, line_size);
 					student_user->post(message, sem_no, off_id);
 				}
 				else if (choice == 4)
+				{
+					int post_id = 1;
+					//cout << "Enter post id: ";
+					//cin >> post_id;
+					my_string off_id = "PF001";
+					//cout << "Enter offered id of course: ";
+					//cin >> off_id;
+					int sem_no = 1;
+					//cout << "Enter sem no of the course: ";
+					//cin >> sem_no;
+					char message[line_size]{ "Hi!" };
+					//cout << "Enter your message: ";
+					//cin.ignore();
+					//cin.getline(message, line_size);
+					student_user->reply(message, sem_no, off_id, post_id);
+				}
+				else if (choice == 5)
 				{
 					my_string off_id;
 					cout << "Enter offered id of course: ";
@@ -257,7 +277,17 @@ int main()
 					student_user->print_discussion(off_id, sem_no);
 					this_thread::sleep_for(chrono::seconds(5));
 				}
-				else if (choice == 5)
+				else if (choice == 6)
+				{
+					my_string off_id;
+					cout << "Enter offered id of course: ";
+					cin >> off_id;
+					int sem_no;
+					cout << "Enter sem no of the course: ";
+					cin >> sem_no;
+					student_user->print_attendance_of_course(off_id, sem_no);
+				}
+				else if (choice == 7)
 				{
 					break;
 				}
@@ -270,16 +300,28 @@ int main()
 		do
 		{
 			system("cls");
-			cout << "Enter what operation you want to perform: 1 for viewing students of a course, 2 for adding a lecture, 3 for marking attendance, 4 for exiting: ";
+			cout << "Enter what operation you want to perform:\n1 for viewing courses taught\n2 for viewing students of a course\n3 for adding a lecture\n4 for marking attendance\n5 for marking grade\n6 for Posting\n7 for Replying\n8 for exiting: ";
 			cin >> choice;
 			if (choice == 1)
+			{
+				int number_of_courses_taught = teacher_user->get_number_of_courses_taught();
+				offered_course**& courses_taught = teacher_user->get_courses_taught();
+				for (int i = 0; i < number_of_courses_taught; i++)
+				{
+					courses_taught[i]->print_offered_course();
+					cout << endl;
+				}
+				this_thread::sleep_for(chrono::seconds(10));
+			}
+			else if (choice == 2)
 			{
 				my_string off_course_id;
 				cout << "Enter offered course id of the course whose students you wish to see: ";
 				cin >> off_course_id;
 				teacher_user->print_students_of_course(off_course_id);
+				this_thread::sleep_for(chrono::seconds(5));
 			}
-			else if (choice == 2)
+			else if (choice == 3)
 			{
 				my_string off_course_id;
 				cout << "Enter offered course id of the course in which you want to add a lecture: ";
@@ -289,7 +331,7 @@ int main()
 				cin >> lect_no;
 				teacher_user->create_lecture(lect_no, off_course_id);
 			}
-			else if (choice == 3)
+			else if (choice == 4)
 			{
 				my_string off_course_id, student_rollno, attd;
 				cout << "Enter offered course id of the course in which you want to add a lecture: ";
@@ -303,7 +345,49 @@ int main()
 				cin >> lect_no;
 				teacher_user->mark_attendance(off_course_id, student_rollno, lect_no, attd);
 			}
-			else if (choice == 4)
+			else if (choice == 5)
+			{
+				my_string off_course_id, roll_no, grade;
+				cout << "Enter course offering_id: ";
+				cin >> off_course_id;
+				cout << "Enter roll no of student: ";
+				cin >> roll_no;
+				cout << "Enter grade that you want to assign: ";
+				cin >> grade;
+				teacher_user->mark_grade(roll_no, off_course_id, grade);
+			}
+			else if (choice == 6)
+			{
+				my_string off_id;
+				cout << "Enter offered id of course: ";
+				cin >> off_id;
+				int sem_no;
+				cout << "Enter sem no of the course: ";
+				cin >> sem_no;
+				char message[line_size];
+				cout << "Enter your message: ";
+				cin.ignore();
+				cin.getline(message, line_size);
+				teacher_user->post(message, off_id);
+			}
+			else if (choice == 7)
+			{
+				int post_id = 0;
+				//cout << "Enter post id: ";
+				//cin >> post_id;
+				my_string off_id = "PF001";
+				//cout << "Enter offered id of course: ";
+				//cin >> off_id;
+				int sem_no = 1;
+				//cout << "Enter sem no of the course: ";
+				//cin >> sem_no;
+				char message[line_size]{ "Hi!" };
+				//cout << "Enter your message: ";
+				//cin.ignore();
+				//cin.getline(message, line_size);
+				teacher_user->reply(message, off_id, post_id);
+			}
+			else if (choice == 8)
 			{
 				break;
 			}
@@ -340,6 +424,10 @@ int main()
 	for (int i = 0; i < number_of_offered_courses; i++)
 	{
 		offered_courses[i].save_off_course_to_file(offered_course_out_file);
+		if (i != number_of_offered_courses - 1)
+		{
+			offered_course_out_file << "\n";
+		}
 	}
 
 	out_file_for_users.close();
@@ -349,6 +437,9 @@ int main()
 	offered_courses_file.close();
 	Courses.close();
 	offered_course_out_file.close();
+
+
+
 
 
 }

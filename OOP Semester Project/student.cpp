@@ -153,7 +153,7 @@ void Student::post(my_string message, int sem_number, my_string id_of_target_cou
 
 void Student::reply(my_string message, int sem_number, my_string id_of_target_course, int post_id)
 {
-    Discussion& discussion = sems[sem_number].get_discussion(id_of_target_course);
+    Discussion& discussion = sems[sem_number - 1].get_discussion(id_of_target_course);
 
     discussion.reply_to_post(post_id, rollNumber, message);
 }
@@ -294,8 +294,8 @@ void Student::load_enrolled_courses(offered_course*& offered_courses, int& numbe
             my_string grade;
             enrollement_file >> grade;
             enrollments[j].assign_grade(grade);
-            Attendance* attd = enrollments->get_attendance();
-            int no_of_lect = enrollments->get_number_of_lectures();
+            Attendance*& attd = enrollments->get_attendance();
+            int& no_of_lect = enrollments->get_number_of_lectures();
             enrollement_file >> no_of_lect;
             if (no_of_lect > 0)
             {
@@ -377,4 +377,38 @@ void Student::save_enrollments_to_file(ofstream& out_file)
 void Student::print_discussion(my_string off_id, int sem_no)
 {
     sems[sem_no - 1].get_discussion(off_id).print_discussion();
+}
+
+void Student::print_attendance_of_course(my_string off_id, int sem_no)
+{
+    int index_of_off_course = -1;
+    Registeration*& courses_enrolled = sems[sem_no - 1].get_registerations();
+    int number_of_courses_enrolled = sems[sem_no - 1].get_number_of_enrollments();
+    for (int i = 0; i < number_of_courses_enrolled; i++)
+    {
+        if (courses_enrolled[i].get_off_course()->get_offered_course_id().string_equality(off_id))
+        {
+            index_of_off_course = i;
+            Registeration**& enrollments = courses_enrolled[i].get_off_course()->get_enrollments();
+            int number_of_enrollments = courses_enrolled[i].get_off_course()->get_number_of_enrollments();
+            for (int j = 0; j < number_of_enrollments; j++)
+            {
+                if (enrollments[j]->get_roll_no().string_equality(rollNumber))
+                {
+                    int& number_of_lectures = enrollments[j]->get_number_of_lectures();
+                    Attendance* attd = enrollments[j]->get_attendance();
+                    for (int k = 0; k < number_of_lectures; k++)
+                    {
+                        attd[k].print_attendance();
+                    }
+                }
+
+            }
+        }
+    }
+
+    //if (index_of_off_course == -1)
+    //{
+
+    //}
 }

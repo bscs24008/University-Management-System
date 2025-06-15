@@ -3,8 +3,8 @@
 #include "post.h"
 #include "reply.h"
 #include <iostream>
-
 using namespace std;
+
 
 Discussion::Discussion()
 {
@@ -26,6 +26,7 @@ void Discussion::reply_to_post(int post_id, my_string id_of_person, my_string co
 			if (posts[i].get_post_id() == post_id)
 			{
 				index_of_post = i;
+				break;
 			}
 		}
 		if (index_of_post == -1)

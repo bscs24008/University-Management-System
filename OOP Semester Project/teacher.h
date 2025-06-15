@@ -33,6 +33,7 @@ public:
     void mark_attendance(my_string offered_course_id, my_string rollno, int lecture_no, my_string attd);
     void print_students_of_course(my_string offered_course_id);
     void create_lecture(int lecture_no, my_string offered_course_id);
+    void mark_grade(my_string roll_no, my_string off_id, my_string grade);
 };
 
 #endif

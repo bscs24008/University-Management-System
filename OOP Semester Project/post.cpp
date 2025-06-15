@@ -15,6 +15,13 @@ void Post:: operator=(const Post& other)
 		id_of_post = other.id_of_post;
 		id_of_person = other.id_of_person;
 		content_of_post = other.content_of_post;
+		current_number_of_replies = other.current_number_of_replies;
+		delete replies;
+		replies = new Reply[current_number_of_replies];
+		for (int i = 0; i < current_number_of_replies; i++)
+		{
+			replies[i] = other.replies[i];
+		}
 	}
 }
 void Post::print_Post()
@@ -32,7 +39,7 @@ void Post::print_Post()
 	}
 }
 
-Post* regrow_post(Post* Posts, int current_number_of_posts)
+Post*& regrow_post(Post*& Posts, int& current_number_of_posts)
 {
 	Post* temp = new Post[current_number_of_posts + 1];
 	for (int i = 0; i < current_number_of_posts; i++)

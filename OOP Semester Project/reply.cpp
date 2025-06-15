@@ -23,7 +23,7 @@ void Reply::print_Reply()
 	cout << endl;
 }
 
-Reply* regrow_reply(Reply* reply, int current_number_of_replies)
+Reply*& regrow_reply(Reply*& reply, int& current_number_of_replies)
 {
 	Reply* temp = new Reply[current_number_of_replies + 1];
 	for (int i = 0; i < current_number_of_replies; i++)

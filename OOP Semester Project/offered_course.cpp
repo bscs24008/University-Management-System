@@ -103,8 +103,9 @@ void offered_course::set_offered_course(course* c, Teacher* t, my_string passed_
 void offered_course::print_offered_course()
 {
 	course::print_course();
-	course_instructor->display_user();
+	offered_course_id.print_string();
 }
+
 
 //void offered_course::initialize_offered_courses(ifstream& f, course*& courses, Teacher*& teachers, int number_of_courses, int number_of_teachers)
 //{
@@ -333,9 +334,9 @@ void offered_course::save_off_course_to_file(ofstream& out_file)
 		int& number_of_replies_of_post = posts[i].get_number_of_replies();
 		Reply*& replies = posts[i].get_replies();
 		out_file << number_of_replies_of_post;
-		if (number_of_replies_of_post == 0 && i != number_of_posts - 1)
+		if (i != number_of_posts - 1 && number_of_replies_of_post == 0)
 		{
-			out_file << "\n";
+			out_file << " ";
 		}
 		for (int j = 0; j < number_of_replies_of_post; j++)
 		{
@@ -345,13 +346,13 @@ void offered_course::save_off_course_to_file(ofstream& out_file)
 			my_string reply_message = replies[j].get_content_of_reply();
 			reply_message.replace_all(' ', '_');
 			out_file << reply_message;
-			if (j != number_of_replies_of_post - 1)
+			if (j == number_of_replies_of_post - 1 && i != number_of_posts - 1) // if reply is last and post is not last
 			{
 				out_file << " ";
 			}
-			else if (i != number_of_posts - 1)
+			else if (j != number_of_replies_of_post - 1) // if reply is not last
 			{
-				out_file << "\n";
+				out_file << " ";
 			}
 		}
 	}

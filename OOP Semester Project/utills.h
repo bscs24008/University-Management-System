@@ -1,3 +1,6 @@
+#ifndef UTILLS_H
+#define UTILLS_H
+
 template <class T>
 
 void regrow_array(T*& t, int no_of_t)
@@ -37,3 +40,7 @@ int get_number_of_teachers(User**& users, int& number_of_users);
 int get_number_of_students(User**& users, int& number_of_users);
 
 Student**& get_students(User**& users, int& number_of_users);
+
+#endif // UTILLS_H
+
+

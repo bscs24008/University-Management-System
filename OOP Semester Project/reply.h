@@ -3,7 +3,6 @@
 
 #include "my_string.h"
 
-
 class Reply
 {
 private:
@@ -20,6 +19,6 @@ public:
 	my_string& get_id_of_person_from_reply();
 };
 
-Reply* regrow_reply(Reply* reply, int current_number_of_posts);
+Reply*& regrow_reply(Reply*& reply, int& current_number_of_posts);
 
 #endif	

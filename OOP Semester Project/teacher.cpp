@@ -70,7 +70,14 @@ void Teacher::post(my_string message, my_string off_course_id)
 			discussion.post(Teacher_id, message);
 		}
 	}
-	//throw("Course not found");
+	
+	
+	
+	
+	
+	
+	
+	throw("Course not found");
 
 }
 void Teacher::reply(my_string message, my_string off_course_id, int post_id)
@@ -81,6 +88,7 @@ void Teacher::reply(my_string message, my_string off_course_id, int post_id)
 		{
 			Discussion& discussion = courses_taught[i]->get_Discussion();
 			discussion.reply_to_post(post_id, Teacher_id, message);
+			return;
 		}
 	}
 	throw("Course not found");
@@ -181,7 +189,7 @@ void Teacher::mark_attendance(my_string offered_course_id, my_string rollno, int
 				if (enrollments[j]->get_roll_no().string_equality(rollno))
 				{
 					Attendance* attendance = enrollments[j]->get_attendance();
-					attendance[lecture_no].set_attendance(lecture_no, attd);
+					attendance[lecture_no - 1].set_attendance(lecture_no, attd);
 				}
 			}
 		}
@@ -224,6 +232,25 @@ void Teacher::create_lecture(int lecture_no, my_string offered_course_id)
 				regrow_array(attendance, no_of_lectures);
 				attendance[no_of_lectures].set_attendance(j + 1, "A");
 				no_of_lectures++;
+			}
+		}
+	}
+}
+
+void Teacher::mark_grade(my_string roll_no, my_string off_id, my_string grade)
+{
+	for (int i = 0; i < number_of_courses_taught; i++)
+	{
+		if (courses_taught[i]->get_offered_course_id().string_equality(off_id))
+		{
+			Registeration**& enrollments = courses_taught[i]->get_enrollments();
+			int& number_of_enrollments = courses_taught[i]->get_number_of_enrollments();
+			for (int j = 0; j < number_of_enrollments; j++)
+			{
+				if (enrollments[j]->get_roll_no().string_equality(roll_no))
+				{
+					enrollments[j]->assign_grade(grade);
+				}
 			}
 		}
 	}
