@@ -25,6 +25,4 @@ public:
 	my_string& get_roll_no();
 
 };
-
-void regrow_registeration(Registeration*& registerations, int number_of_registerations);
 #endif

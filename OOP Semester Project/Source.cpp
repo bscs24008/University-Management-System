@@ -55,11 +55,6 @@ int main()
 	{
 		offered_courses = nullptr;
 	}
-	//Teacher** teachers = get_teachers(users, number_of_users);
-	//int number_of_teachers = get_number_of_teachers(users, number_of_users);
-
-	Student** students = get_students(users, number_of_users);
-	int number_of_students = get_number_of_students(users, number_of_users);
 
 	for (int i = 0; i < number_of_offered_courses; i++)
 	{
@@ -67,14 +62,13 @@ int main()
 		offered_courses[i].offer_course(users, number_of_users, teacher_ids[i]);
 	}
 
-	//for (int i = 0; i < number_of_offered_courses; i++)
-	//{
-	//	offered_courses[i].print_offered_course();
-	//}
-
-	for (int i = 0; i < number_of_students; i++)
+	for (int i = 0; i < number_of_users; i++)
 	{
-		students[i]->load_enrolled_courses(offered_courses, number_of_offered_courses, enrollment_file);
+		if (users[i]->get_role().string_equality("Student"))
+		{
+			Student* std = (Student *&)users[i];
+			std->load_enrolled_courses(offered_courses, number_of_offered_courses, enrollment_file);
+		}
 	}
 
 
@@ -83,13 +77,13 @@ int main()
 
 
 
-	my_string email = "ak@itu.edu.pk";
-	my_string password = "1234";
+	my_string email;
+	my_string password;
 
-	//cout << "Enter email for logging in: ";
-	//cin >> email;
-	//cout << "Enter password for logging in: ";
-	//cin >> password;
+	cout << "Enter email for logging in: ";
+	cin >> email;
+	cout << "Enter password for logging in: ";
+	cin >> password;
 
 	User* logged_in_user = nullptr;
 	for (int i = 0; i < number_of_users; i++)
@@ -114,30 +108,22 @@ int main()
 			if (choice == 1)
 			{
 				my_string Password, roll_no, first_name, last_name, email, date_of_birth, city, country;
-				//cout << "Enter first name of student: ";
-				//cin >> first_name;
-				//cout << "Enter last name of student: ";
-				//cin >> last_name;
-				//cout << "Enter roll no: ";
-				//cin >> roll_no;
-				//cout << "Enter city of student: ";
-				//cin >> city;
-				//cout << "Enter country of student: ";
-				//cin >> country;
-				//cout << "Enter date_of_birth of student in the format dd/mm/yyyy: ";
-				//cin >> date_of_birth;
-				//cout << "Enter email of student: ";
-				//cin >> email;
-				//cout << "Enter password for student: ";
-				//cin >> Password;
-				Password = "1234";
-				roll_no = "24008";
-				first_name = "Abdullah";
-				last_name = "Khalid";
-				email = "ak@itu.edu.pk";
-				city = "Lahore";
-				country = "Pakistan";
-				date_of_birth = "31/03/2006";
+				cout << "Enter first name of student: ";
+				cin >> first_name;
+				cout << "Enter last name of student: ";
+				cin >> last_name;
+				cout << "Enter roll no: ";
+				cin >> roll_no;
+				cout << "Enter city of student: ";
+				cin >> city;
+				cout << "Enter country of student: ";
+				cin >> country;
+				cout << "Enter date_of_birth of student in the format dd/mm/yyyy: ";
+				cin >> date_of_birth;
+				cout << "Enter email of student: ";
+				cin >> email;
+				cout << "Enter password for student: ";
+				cin >> Password;
 
 
 				Name name_of_student(first_name, last_name);
@@ -151,33 +137,24 @@ int main()
 				my_string Password, teacher_id, first_name, last_name, email, date_of_birth, city, country;
 				int salary = 0;
 
-				//cout << "Enter first name of teacher: ";
-				//cin >> first_name;
-				//cout << "Enter last name of teacher: ";
-				//cin >> last_name;
-				//cout << "Enter teacher id: ";
-				//cin >> roll_no;
-				//cout << "Enter city of teacher: ";
-				//cin >> city;
-				//cout << "Enter country of teacher: ";
-				//cin >> country;
-				//cout << "Enter date_of_birth of teacher in the format dd/mm/yyyy: ";
-				//cin >> date_of_birth;
-				//cout << "Enter email of teacher: ";
-				//cin >> email;
-				//cout << "Enter password for teacher: ";
-				//cin >> Password;
-				//cout << "Enter salary: ";
-				//cin >> salary;
-
-				Password = "1234";
-				teacher_id = "T001";
-				first_name = "Husnain";
-				last_name = "Haider";
-				email = "@itu.edu.pk";
-				city = "Lahore";
-				country = "Pakistan";
-				date_of_birth = "31/03/2006";
+				cout << "Enter first name of teacher: ";
+				cin >> first_name;
+				cout << "Enter last name of teacher: ";
+				cin >> last_name;
+				cout << "Enter teacher id: ";
+				cin >> teacher_id;
+				cout << "Enter city of teacher: ";
+				cin >> city;
+				cout << "Enter country of teacher: ";
+				cin >> country;
+				cout << "Enter date_of_birth of teacher in the format dd/mm/yyyy: ";
+				cin >> date_of_birth;
+				cout << "Enter email of teacher: ";
+				cin >> email;
+				cout << "Enter password for teacher: ";
+				cin >> Password;
+				cout << "Enter salary: ";
+				cin >> salary;
 
 				salary = 200000;
 
@@ -225,13 +202,17 @@ int main()
 				cin >> choice;
 				if (choice == 1)
 				{
-					my_string offered_course_id = "PF001";
-					student_user->enroll(1, offered_courses, offered_course_id, number_of_offered_courses);
+					my_string off_id;
+					cout << "Enter offered id of course: ";
+					cin >> off_id;
+					int sem_no;
+					cout << "Enter sem no of the course: ";
+					cin >> sem_no;
+					student_user->enroll(sem_no, offered_courses, off_id, number_of_offered_courses);
 					system("cls");
 				}
 				else if (choice == 2)
 				{
-					int useless_variable;
 					student_user->display_transcript();
 					this_thread::sleep_for(chrono::seconds(5));
 				}
@@ -251,19 +232,19 @@ int main()
 				}
 				else if (choice == 4)
 				{
-					int post_id = 1;
-					//cout << "Enter post id: ";
-					//cin >> post_id;
-					my_string off_id = "PF001";
-					//cout << "Enter offered id of course: ";
-					//cin >> off_id;
+					int post_id;
+					cout << "Enter post id: ";
+					cin >> post_id;
+					my_string off_id;
+					cout << "Enter offered id of course: ";
+					cin >> off_id;
 					int sem_no = 1;
-					//cout << "Enter sem no of the course: ";
-					//cin >> sem_no;
-					char message[line_size]{ "Hi!" };
-					//cout << "Enter your message: ";
-					//cin.ignore();
-					//cin.getline(message, line_size);
+					cout << "Enter sem no of the course: ";
+					cin >> sem_no;
+					char message[line_size]{'\0'};
+					cout << "Enter your message: ";
+					cin.ignore();
+					cin.getline(message, line_size);
 					student_user->reply(message, sem_no, off_id, post_id);
 				}
 				else if (choice == 5)
@@ -372,19 +353,19 @@ int main()
 			}
 			else if (choice == 7)
 			{
-				int post_id = 0;
-				//cout << "Enter post id: ";
-				//cin >> post_id;
-				my_string off_id = "PF001";
-				//cout << "Enter offered id of course: ";
-				//cin >> off_id;
-				int sem_no = 1;
-				//cout << "Enter sem no of the course: ";
-				//cin >> sem_no;
-				char message[line_size]{ "Hi!" };
-				//cout << "Enter your message: ";
-				//cin.ignore();
-				//cin.getline(message, line_size);
+				int post_id;
+				cout << "Enter post id: ";
+				cin >> post_id;
+				my_string off_id;
+				cout << "Enter offered id of course: ";
+				cin >> off_id;
+				int sem_no;
+				cout << "Enter sem no of the course: ";
+				cin >> sem_no;
+				char message[line_size]{'\0'};
+				cout << "Enter your message: ";
+				cin.ignore();
+				cin.getline(message, line_size);
 				teacher_user->reply(message, off_id, post_id);
 			}
 			else if (choice == 8)
@@ -415,9 +396,13 @@ int main()
 			out_file_for_courses << "\n";
 		}
 	}
-	for (int i = 0; i < number_of_students; i++)
+	for (int i = 0; i < number_of_users; i++)
 	{
-		students[i]->save_enrollments_to_file(enrollments);
+		if (users[i]->get_role().string_equality("Student"))
+		{
+			Student* std = (Student*&)users[i];
+			std->save_enrollments_to_file(enrollments);
+		}
 	}
 	offered_course_out_file << number_of_offered_courses;
 	offered_course_out_file << "\n";

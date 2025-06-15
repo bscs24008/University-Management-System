@@ -11,7 +11,6 @@ private:
 
 public:
 	Reply();
-	//Post(my_string id, my_string content_of_post);
 	void operator=(Reply other);
 	void print_Reply();
 	void set_value_of_reply(my_string passed_id_of_person, my_string passed_content_of_reply);

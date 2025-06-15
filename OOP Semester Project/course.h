@@ -28,6 +28,5 @@ public:
 
 int& get_number_of_courses();
 course*& get_courses();
-course* regrow_course(int current_number_of_courses, course* courses);
 
 #endif

@@ -20,20 +20,6 @@ my_string Registeration::get_grade()
 	return grade;
 }
 
-void regrow_registeration(Registeration*& registerations, int number_of_registerations)
-{
-	Registeration* new_registerations = new Registeration[number_of_registerations + 1];
-
-
-	for (int i = 0; i < number_of_registerations; i++)
-	{
-		new_registerations[i] = registerations[i];
-	}
-
-	delete[] registerations;
-
-	registerations = new_registerations;
-}
 void Registeration::set(my_string passed_rollno, offered_course*& passed_off_course, my_string passed_grade)
 {
 	rollno = passed_rollno;

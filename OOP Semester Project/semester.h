@@ -20,6 +20,4 @@ public:
 	Discussion& get_discussion(my_string id_of_target_course);
 };
 
-void regrow_semester(Semester*& sems, int number_of_sems);
-
 #endif

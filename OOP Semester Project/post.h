@@ -15,7 +15,6 @@ private:
 	int current_number_of_replies = 0;
 public:
 	Post();
-	//Post(my_string id, my_string content_of_post);
 	void operator=(const Post& other);
 	void print_Post();
 	void set_value_of_post(int passed_id_of_post, my_string passed_id_of_person, my_string passed_content_of_post);

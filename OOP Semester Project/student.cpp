@@ -18,12 +18,7 @@ Student::Student(const Student& other) : User(other), rollNumber(other.rollNumbe
 
     number_of_sems = other.number_of_sems;
 }
-//Student::Student(const my_string password, const my_string& rollNumber, const my_string& email, const Date& dob, const Name& name, const Address& addr, int sem_no) : User(name, dob, addr, email), rollNumber(rollNumber)
-//{
-//    sems = new Semester[sem_no];
-//
-//    number_of_sems = sem_no;
-//}
+
 Student& Student ::operator=(const Student& other)
 {
     if (this != &other)
@@ -109,40 +104,12 @@ void Student::enroll(int sem_no, offered_course*& off_courses, my_string passsed
 
 }
 
-void regrow_student_array(Student*& arr, int number_of_students)
-{
-    Student* new_arr = new Student[number_of_students + 1];
-
-    for (int i = 0; i < number_of_students; i++)
-    {
-        new_arr[i] = arr[i];
-    }
-
-    delete[] arr;
-
-    arr = new_arr;
-}
-
 void Student::set_student(const my_string& passed_rollNumber)
 {
     rollNumber = passed_rollNumber;
     sems = new Semester;
     number_of_sems = 1;
 }
-
-
-
-//void add_student(Student*& students, int& number_of_students, const my_string& rollNumber, const my_string& email, const Date& dob, const Name& name, const Address& addr, int sem_number)
-//{
-//    regrow_student_array(students, number_of_students);
-//
-//
-//    students[number_of_students].set_student(rollNumber, email, dob, name, addr, sem_number);
-//
-//    number_of_students++;
-//
-//
-//}
 
 void Student::post(my_string message, int sem_number, my_string id_of_target_course)
 {
@@ -234,28 +201,6 @@ void Student::load_from_file(ifstream& in_file)
     Address address_of_Teacher(city, country);
 
     User::set_user(password, name_of_person, dob, address_of_Teacher, email_of_teacher);
-
-    //in_file >> number_of_sems;
-
-    //sems = new Semester[number_of_sems];
-
-    //offered_course*& off_courses = get_offered_courses();
-    //int no_of_off_courses = get_number_of_off_courses();
-
-    //for (int i = 0; i < number_of_sems; i++)
-    //{
-    //    int number_of_courses_enrolled;
-
-    //    in_file >> number_of_courses_enrolled;
-
-    //    for (int j = 0; j < number_of_courses_enrolled; j++)
-    //    {
-    //        my_string target_course_id;
-    //        in_file >> target_course_id;
-
-    //        this->enroll(i, off_courses, target_course_id, no_of_off_courses);
-    //    }
-    //}
 
 }
 

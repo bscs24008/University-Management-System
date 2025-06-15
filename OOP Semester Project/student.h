@@ -15,7 +15,6 @@ private:
 public:
     Student();
     Student(const Student& other);
-    //Student(const my_string password, const my_string& rollNumber, const my_string& email, const Date& dob, const Name& name, const Address& addr, int sem_number);
     Student& operator=(const Student& other);
     void enroll(int sem_no, offered_course*& off_courses, my_string passsed_course_id, int number_of_offered_courses);
     void display() override;
@@ -31,9 +30,5 @@ public:
     void print_discussion(my_string off_id, int sem_no);
     void print_attendance_of_course(my_string off_id, int sem_no);
 };
-
-void regrow_student_array(Student*& arr, int number_of_students);
-//void add_student(Student*& students, int& number_of_students, const my_string& rollNumber, const my_string& email, const Date& dob, const Name& name, const Address& addr, int sem_number);
-
 #endif
 

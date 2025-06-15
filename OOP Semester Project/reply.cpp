@@ -7,7 +7,6 @@ Reply::Reply()
 {
 
 }
-//Post(my_string id, my_string content_of_post);
 void Reply:: operator=(Reply other)
 {
 	id_of_person_replying = other.id_of_person_replying;

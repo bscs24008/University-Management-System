@@ -37,19 +37,6 @@ Semester& Semester:: operator=(const Semester& other)
 
 }
 
-void regrow_semester(Semester*& sems, int number_of_sems)
-{
-	Semester* new_sems = new Semester[number_of_sems + 1];
-	for (int i = 0; i < number_of_sems; i++)
-	{
-		new_sems[i] = sems[i];
-	}
-	delete[] sems;
-
-	sems = new_sems;
-
-}
-
 Registeration*& Semester::get_registerations()
 {
 	return registerations;

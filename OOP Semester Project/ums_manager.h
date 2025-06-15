@@ -19,7 +19,6 @@ public:
 	void offer_course(offered_course*& offered_courses, int& current_number_of_offered_courses, int& current_number_of_courses, course*& courses, my_string course_id, User**& users, my_string teacher_id, int& current_number_of_users, my_string offered_course_id);
 	void display() override;
 	my_string get_role() override;
-	//void menu() override;
 };
 
 

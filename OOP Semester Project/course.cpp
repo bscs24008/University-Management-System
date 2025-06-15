@@ -37,18 +37,6 @@ void course :: operator=(const course& c)
 	credits = c.credits;
 }
 
-course* regrow_course(int current_number_of_courses, course* courses)
-{
-	course* temp = new course[current_number_of_courses + 1];
-
-	for (int i = 0; i < current_number_of_courses; i++)
-	{
-		temp[i] = courses[i];
-	}
-
-	return temp;
-}
-
 my_string& course::get_course_id()
 {
 	return course_id;

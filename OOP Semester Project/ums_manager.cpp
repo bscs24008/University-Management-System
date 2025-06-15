@@ -133,28 +133,3 @@ void UMS_manager::offer_course(offered_course*& offered_courses, int& current_nu
 	offered_courses[current_number_of_offered_courses].offer_course(users, current_number_of_users, &teacher_id);
 	current_number_of_offered_courses++;
 }
-/*
-Entity: UMS Manager, Student, Teacher
-
-UMS Manager(*)
-	- add teacher
-	- add student
-	- add course
-	- offer course
-
-Student:(completed)
-	- enroll course
-	- see grades
-	- post
-	- reply
-
-Teacher:(*)
-	- give grade
-	- post
-	- reply
-
-
-
-Post / Thread
-Comment
-*/

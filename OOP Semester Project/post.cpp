@@ -7,7 +7,6 @@ Post::Post()
 {
 
 }
-//Post(my_string id, my_string content_of_post);
 void Post:: operator=(const Post& other)
 {
 	if (this != &other)
